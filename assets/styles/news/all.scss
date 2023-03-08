@@ -1,0 +1,50 @@
+.all_news{
+    margin-bottom: 20px;
+    & .title{
+        background-color: $secondary;
+        text-transform: uppercase;
+        color: white;
+        position: relative;
+        padding-top: 50px!important;
+        padding-bottom: 50px;
+        font-weight: lighter;
+        font-size: 2rem;
+        margin-bottom: 40px;
+        & span {
+            font-weight: bold;
+        }
+       
+    }
+    & > p{
+        color: $secondary;
+        text-align: center;
+        font-size: 1.1rem;
+        margin-bottom: 50px;
+    }
+    & > a{
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: $primary;
+            &:hover{
+                color: $secondary;
+            }
+    }
+
+    .card{
+        height: 100%;
+        text-align: left;
+        .card-title{
+            padding: 10px;
+            a{
+                text-decoration: none;
+                color: #000;
+                &:hover{
+                    color: $primary!important;
+                }
+            }
+        }
+        .card-text{
+            padding: 0px 10px 5px 10px;
+        }
+    }
+}

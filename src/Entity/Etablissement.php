@@ -9,14 +9,19 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=EtablissementRepository::class)
  * @HasLifecycleCallbacks 
+ * @UniqueEntity("name")
  */
 class Etablissement
 {
     use Timestampable;
+
+    public const NUM_ITEMS_PER_PAGE = 12;
 
     /**
      * @ORM\Id
@@ -37,22 +42,24 @@ class Etablissement
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $sigle;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url
      */
     private $video;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="json")
      */
-    private $typeBac;
+    private $typeBac = [];
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive
      */
     private $dureeFormation;
 
@@ -73,36 +80,43 @@ class Etablissement
 
     /**
      * @ORM\Column(type="decimal")
+     * @Assert\Positive
      */
     private $seuilSM;
 
     /**
      * @ORM\Column(type="decimal")
+     * @Assert\Positive
      */
     private $seuilSP;
 
     /**
      * @ORM\Column(type="decimal")
+     * @Assert\Positive
      */
     private $seuilSVT;
 
     /**
      * @ORM\Column(type="decimal")
+     * @Assert\Positive
      */
     private $seuilSAgro;
 
     /**
      * @ORM\Column(type="decimal")
+     * @Assert\Positive
      */
     private $seuilEco;
 
     /**
      * @ORM\Column(type="decimal")
+     * @Assert\Positive
      */
     private $seuilSTM;
 
     /**
      * @ORM\Column(type="decimal")
+     * @Assert\Positive
      */
     private $seuilSTE;
 
@@ -122,12 +136,6 @@ class Etablissement
     private $isFavorite = false;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="etablissements")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $ville;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $logo;
@@ -144,27 +152,43 @@ class Etablissement
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url
      */
     private $website;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToMany(targetEntity=Tags::class, inversedBy="etablissements")
      */
     private $tags;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Secteur::class, inversedBy="etablissements")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url
      */
-    private $secteur;
+    private $fb;
 
     /**
-     * @ORM\OneToMany(targetEntity=News::class, mappedBy="etablissement")
+     * @ORM\ManyToMany(targetEntity=Secteur::class, inversedBy="etablissements")
      */
-    private $news;
+    private $secteurs;
+
+    /**
+     * @ORM\OneToMany(targetEntity=DocumentEtablissement::class, mappedBy="etablissement")
+     */
+    private $documentEtablissements;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Ville::class)
+     */
+    private $villes;
+
 
     public function __construct()
     {
-        $this->news = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+        $this->secteurs = new ArrayCollection();
+        $this->documentEtablissements = new ArrayCollection();
+        $this->villes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,17 +244,19 @@ class Etablissement
         return $this;
     }
 
-    public function getTypeBac(): ?string
+    public function getTypeBac(): array
     {
-        return $this->typeBac;
+        $typeBac = $this->typeBac;
+        return array_unique($typeBac);
     }
 
-    public function setTypeBac(string $typeBac): self
+    public function setTypeBac(array $typeBac): self
     {
         $this->typeBac = $typeBac;
 
         return $this;
     }
+
 
     public function getDureeFormation(): ?int
     {
@@ -400,18 +426,6 @@ class Etablissement
         return $this;
     }
 
-    public function getVille(): ?Ville
-    {
-        return $this->ville;
-    }
-
-    public function setVille(?Ville $ville): self
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
-
     public function getLogo(): ?string
     {
         return $this->logo;
@@ -460,62 +474,122 @@ class Etablissement
         return $this;
     }
 
-    public function getTags(): ?string
+    public function __toString()
+    {
+        return sprintf('%s (%s)', $this->name, $this->sigle);
+    }
+
+    /**
+     * @return Collection<int, Tags>
+     */
+    public function getTags(): Collection
     {
         return $this->tags;
     }
 
-    public function setTags(?string $tags): self
+    public function addTag(Tags $tag): self
     {
-        $this->tags = $tags;
-
-        return $this;
-    }
-
-    public function getSecteur(): ?secteur
-    {
-        return $this->secteur;
-    }
-
-    public function setSecteur(?secteur $secteur): self
-    {
-        $this->secteur = $secteur;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, News>
-     */
-    public function getNews(): Collection
-    {
-        return $this->news;
-    }
-
-    public function addNews(News $news): self
-    {
-        if (!$this->news->contains($news)) {
-            $this->news[] = $news;
-            $news->setEtablissement($this);
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
         }
 
         return $this;
     }
 
-    public function removeNews(News $news): self
+    public function removeTag(Tags $tag): self
     {
-        if ($this->news->removeElement($news)) {
+        $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    public function getFb(): ?string
+    {
+        return $this->fb;
+    }
+
+    public function setFb(?string $fb): self
+    {
+        $this->fb = $fb;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Secteur>
+     */
+    public function getSecteurs(): Collection
+    {
+        return $this->secteurs;
+    }
+
+    public function addSecteur(Secteur $secteur): self
+    {
+        if (!$this->secteurs->contains($secteur)) {
+            $this->secteurs[] = $secteur;
+        }
+
+        return $this;
+    }
+
+    public function removeSecteur(Secteur $secteur): self
+    {
+        $this->secteurs->removeElement($secteur);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DocumentEtablissement>
+     */
+    public function getDocumentEtablissements(): Collection
+    {
+        return $this->documentEtablissements;
+    }
+
+    public function addDocumentEtablissement(DocumentEtablissement $documentEtablissement): self
+    {
+        if (!$this->documentEtablissements->contains($documentEtablissement)) {
+            $this->documentEtablissements[] = $documentEtablissement;
+            $documentEtablissement->setEtablissement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocumentEtablissement(DocumentEtablissement $documentEtablissement): self
+    {
+        if ($this->documentEtablissements->removeElement($documentEtablissement)) {
             // set the owning side to null (unless already changed)
-            if ($news->getEtablissement() === $this) {
-                $news->setEtablissement(null);
+            if ($documentEtablissement->getEtablissement() === $this) {
+                $documentEtablissement->setEtablissement(null);
             }
         }
 
         return $this;
     }
 
-    public function __toString()
+    /**
+     * @return Collection<int, Ville>
+     */
+    public function getVilles(): Collection
     {
-        return sprintf('%s (%s)', $this->name, $this->sigle);
+        return $this->villes;
+    }
+
+    public function addVille(Ville $ville): self
+    {
+        if (!$this->villes->contains($ville)) {
+            $this->villes[] = $ville;
+        }
+
+        return $this;
+    }
+
+    public function removeVille(Ville $ville): self
+    {
+        $this->villes->removeElement($ville);
+
+        return $this;
     }
 }

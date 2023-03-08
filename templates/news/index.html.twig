@@ -1,0 +1,38 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}
+	Actualités | Après bac
+{% endblock %}
+
+{% block body %}
+	<section class="all_news">
+		<h2 class="title text-center pt-4">Explorer nos
+			<span>Actualités</span>
+		</h2>
+		<p class="text-center container">Restez informé des dernières nouvelles sur les événements et activités d'orientation, ainsi que des autres nouvelles importantes de la vie universitaire, y compris les clubs, les organisations, les projets de service communautaire et plus encore.</p>
+		<div class="container">
+			<div class="row justify-content-center">
+				{% for key, item in pagination %}
+					<div class="col-12 col-lg-3 mb-sm-4 mb-lg-0">
+						<div class="card d-flex flex-column">
+							<img src="{{ asset('uploads/news/' ~ item.image) }}" class="card-img-top flex-grow-1" alt="{{item.title}}">
+							<h5 class="card-title">
+								<a href="{{ path('app_news_show', { slug: item.slug }) }}">{{item.title|u.truncate(24, '...')}}</a>
+							</h5>
+							<p class="card-text card-footer">
+								<small class="text-muted">
+									<i class="fa-regular fa-clock"></i>
+									Publiée
+									<time datetime="{{ item.publishedAt|date('Y-m-d H:i') }}">{{ item.publishedAt|ago }}</time>
+								</small>
+							</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="d-flex justify-content-center py-4">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+	</section>
+{% endblock %}

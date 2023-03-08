@@ -24,7 +24,8 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('@EasyAdmin/page/login.html.twig', [
-            'page_title' => 'Après bac administration',
+            'page_title' => "<div class='d-flex align-items-center flex-column mb-4'><img src='uploads/images/apresbac.png' alt='Logo' height='70' class='d-inline-block align-text-top mb-2'>
+            Après bac adminstration</div>",
             'username_label' => 'Email',
             'sign_in_label' => 'Connectez-vous',
             'error' => $error,

@@ -1,0 +1,112 @@
+
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 90deg;
+    inherits: true;
+}
+
+
+@keyframes borderRotate {
+	100% {
+		--angle: 420deg;
+	}
+}
+
+
+:root {
+    --d: 2500ms;
+    --angle: 90deg;
+    --c1: rgba(168, 239, 255, 1);
+    --c2: rgba(168, 239, 255, 0.1);
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.inscriptions{
+    background: linear-gradient(-45deg, $fourthy, $primary, $secondary);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    padding: 40px 20px 60px 20px;
+    margin: 90px 0;
+    &__title{
+        text-transform: uppercase;
+        position: relative;
+        font-size: 2.688rem;
+        font-weight: lighter;
+        color: white;
+        padding-bottom: 40px;
+        & span {
+            font-weight: bold;
+        }
+       
+    }
+    .card{
+        height: 100%;
+        
+    }
+    .card.second-card{
+        border-image: conic-gradient(from var(--angle), var(--c2), var(--c1) 0.1turn, var(--c1) 0.15turn, var(--c2) 0.25turn) 30;
+	    animation: borderRotate var(--d) linear infinite forwards;
+        background-color: sandybrown;
+        color: white;
+    }
+    &__card{
+        a.first-card-link, a.second-card-link{
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        a.first-card-link{
+            color: $primary;
+            &:hover{
+                color: $secondary;
+            }
+        }
+        &-item{
+            &--triangle{
+                display: inline-flex;
+                transform: rotate(45deg);
+                background-color: $primary;
+                margin: 15px;
+                span.icon{
+                    height: 30px;
+                    width: 30px;
+                    font-size: 1.188rem;
+                    padding: 15px;
+                    color: #FFFFFF;
+                    transition: all .5s;
+                    line-height: 1;
+                    text-align: center;
+                    display: flex;
+                    align-items: center;
+                    -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                    i{
+                        transform: rotate(-45deg);
+                        width: 1em;
+                        height: 1em;
+                        position: relative;
+                        display: block;
+                    }
+                }
+            }
+            &--title{
+                h4{
+                    font-size: 1.063rem;
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+        }
+    }
+}

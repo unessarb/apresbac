@@ -2,9 +2,14 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Banner;
+use App\Entity\DocumentEtablissement;
 use App\Entity\Etablissement;
 use App\Entity\News;
 use App\Entity\Secteur;
+use App\Entity\Tags;
+use App\Entity\User;
+use App\Entity\Ville;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -28,17 +33,22 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Après bac');
+            ->setTitle('ADMINSTRATION');
     }
 
     public function configureMenuItems(): iterable
     {
 
+
         yield MenuItem::section();
         yield MenuItem::linkToUrl('Visit public website', 'fa fa-home', '/');
         yield MenuItem::linkToCrud('Etablissements', 'fas fa-graduation-cap', Etablissement::class);
-        yield MenuItem::linkToCrud('Actualités', 'fas fa-graduation-cap', News::class);
-        yield MenuItem::linkToCrud('Utilisateur', 'fas fa-users', News::class);
-        yield MenuItem::linkToCrud('Secteurs', 'fas fa-list', Secteur::class);
+        yield MenuItem::linkToCrud('Docs. Etablissement', 'fas fa-folder-open', DocumentEtablissement::class);
+        yield MenuItem::linkToCrud('Actualités', 'fas fa-newspaper', News::class);
+        yield MenuItem::linkToCrud('Utilisateur', 'fas fa-users', User::class)->setPermission("ROLE_SUPER_ADMIN");
+        yield MenuItem::linkToCrud('Bannières', 'fas fa-tv', Banner::class)->setPermission("ROLE_ADMIN");
+        yield MenuItem::linkToCrud('Secteurs', 'fas fa-list', Secteur::class)->setPermission("ROLE_ADMIN");
+        yield MenuItem::linkToCrud('Villes', 'fas fa-city', Ville::class)->setPermission("ROLE_ADMIN");
+        yield MenuItem::linkToCrud('Tags', 'fas fa-tags', Tags::class)->setPermission("ROLE_ADMIN");
     }
 }

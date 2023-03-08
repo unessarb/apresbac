@@ -1,0 +1,96 @@
+.show_secteurs{
+    & .title{
+        background-color: $secondary;
+        text-transform: uppercase;
+        color: white;
+        position: relative;
+        padding-top: 50px!important;
+        padding-bottom: 50px;
+        font-weight: lighter;
+        font-size: 2rem;
+        margin-bottom: 40px;
+        & span {
+            font-weight: bold;
+        }
+    }
+    .card{
+        height: 100%;
+        text-align: left;
+        position: relative;
+        .card-title{
+            font-size: 1rem;
+            padding: 40px 10px 0px 10px;
+        }
+        .card-text{
+            padding: 0px 10px 0px 10px;
+        }
+        &-img{
+            width: 80px;
+            height: 80px;
+            background-repeat: no-repeat!important;
+            background-size: contain!important;
+            background-position: center!important;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            position: absolute;
+            top: 186px;
+            left:10px
+        }
+        &-play{
+            position: absolute;
+            top: 24%;
+            left: 41%;
+            i{
+                font-size: 50px;
+                color: $primary;
+                transition: all .2s ease-out;
+                cursor: pointer;
+                &:hover{
+                    transform: scale(1.1);
+                }
+            }
+        }
+        &-whatsapp{
+            color: #25d366;
+            text-decoration: none;
+            i{
+                font-size: 1.5rem;
+            }
+        }
+        &-phone{
+            color: $secondary;
+            text-decoration: none;
+            i{
+                font-size: 1.2rem;
+            }
+        }
+        &-seuil{
+            color: $primary;
+            text-decoration: none;
+            i{
+                font-size: 1.2rem;
+            }
+        }
+        &-fb{
+            color: #1877f2;
+            text-decoration: none;
+            i{
+                font-size: 1.4rem;
+            }
+        }
+    }
+    .video.modal-dialog{
+        max-width: 920px;
+        margin: 30px auto;
+    }
+  
+    .video .modal-body {
+        position:relative;
+        padding:0px;
+    }
+    .video .btn-close {
+        position:absolute;
+        right:-30px;
+        top:0;
+    }
+}

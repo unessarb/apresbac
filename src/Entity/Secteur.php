@@ -7,9 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=SecteurRepository::class)
+ * @UniqueEntity("name")
  */
 class Secteur
 {
@@ -42,14 +44,9 @@ class Secteur
     private $image;
 
     /**
-     * @ORM\OneToMany(targetEntity=Etablissement::class, mappedBy="secteur")
+     * @ORM\Column(type="boolean")
      */
-    private $etablissements;
-
-    public function __construct()
-    {
-        $this->etablissements = new ArrayCollection();
-    }
+    private $isActive;
 
     public function getId(): ?int
     {
@@ -104,38 +101,20 @@ class Secteur
         return $this;
     }
 
-    /**
-     * @return Collection<int, Etablissement>
-     */
-    public function getEtablissements(): Collection
-    {
-        return $this->etablissements;
-    }
-
-    public function addEtablissement(Etablissement $etablissement): self
-    {
-        if (!$this->etablissements->contains($etablissement)) {
-            $this->etablissements[] = $etablissement;
-            $etablissement->setSecteur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEtablissement(Etablissement $etablissement): self
-    {
-        if ($this->etablissements->removeElement($etablissement)) {
-            // set the owning side to null (unless already changed)
-            if ($etablissement->getSecteur() === $this) {
-                $etablissement->setSecteur(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function isIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
     }
 }

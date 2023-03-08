@@ -1,0 +1,82 @@
+<footer class="footer-section">
+	<div class="container">
+		<div class="footer-content pt-5 pb-5">
+			<div class="row">
+				<div class="col-xl-4 col-lg-4 mb-50">
+					<div class="footer-widget">
+						<div class="footer-logo">
+							<a href="{{path('app_home')}}"><img src="{{ asset('uploads/images/apresbac.png') }}" class="img-fluid" alt="logo"></a>
+						</div>
+						<div class="footer-text">
+							<p>Votre guide pour une orientation réussie.
+								<br>Notre rôle est de fournir des informations et des conseils pour aider les étudiants à réussir leur transition vers l'université.</p>
+						</div>
+						<div class="footer-social-icon mb-4 mb-lg-0">
+							<span>Suivez-nous</span>
+							<a href="#">
+								<i class="fab fa-facebook-f facebook-bg"></i>
+							</a>
+							<a href="#">
+								<i class="fab fa-twitter twitter-bg"></i>
+							</a>
+							<a href="#">
+								<i class="fab fa-google-plus-g google-bg"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+					<div class="footer-widget">
+						<div class="footer-widget-heading">
+							<h3>Liens utiles</h3>
+						</div>
+						<ul>
+							{{ render(controller('App\\Controller\\HomeController::liensUtiles')) }}
+						</ul>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6 mb-50">
+					<div class="footer-widget">
+						<div class="footer-widget-heading">
+							<h3>S'abonner à</h3>
+						</div>
+						<div class="footer-text mb-25">
+							<p>Ne manquez pas de vous abonner à nos nouveaux flux, en remplissant le formulaire ci-dessous.</p>
+						</div>
+						<div class="subscribe-form">
+							<form action="#">
+								<input type="text" placeholder="Adresse électronique">
+								<button>
+									<i class="fab fa-telegram-plane"></i>
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="copyright-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-6 col-lg-6 text-center text-lg-start">
+					<div class="copyright-text">
+						<p>Copyright &copy;
+							{{ 'now' | date('Y') }}, All Right Reserved
+							<a href="/">Après bac</a>
+						</p>
+					</div>
+				</div>
+				<div class="col-xl-6 col-lg-6 d-none d-lg-block text-end">
+					<div class="footer-menu">
+						<ul>
+							<li><a href="/" id="">Accueil</a></li>
+							<li><a class=""href="{{ path('app_news') }}">Actualités</a></li>
+							<li><a class="" href="#">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>

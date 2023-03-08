@@ -1,0 +1,19 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}
+	Accueil | Après bac
+{% endblock %}
+
+{% block body %}
+	{# Slider #}
+	{{ include('home/carousel.html.twig') }}
+
+	{# Bloc Secteurs #}
+	{{ include('home/secteurs.html.twig') }}
+
+	{# Bloc Inscriptions #}
+	{{ include('home/inscriptions.html.twig') }}
+
+	{# Bloc News #}
+	{{ include('home/news.html.twig') }}
+{% endblock %}

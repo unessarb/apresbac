@@ -1,0 +1,28 @@
+<section class="container secteurs">
+	<h2 class="title text-center pt-4">Explorer par
+		<span>secteurs</span>
+	</h2>
+	<p>Choisissez le secteur qui vous convient</p>
+	<div class="row">
+		{% for key, secteur in secteurs|slice(0, 3) %}
+			<div class="col-12 col-lg{% if key == 1 %}-5{% endif %} mx-2 mb-2 mb-lg-0 card" style="background-image: url({{ asset('uploads/secteurs/' ~ secteur.image) }})">
+				<a href="{{ path('app_secteurs_show', { slug: secteur.slug }) }}">
+					<div class="layer"></div>
+					<h3>{{ secteur.name|e }}</h3>
+				</a>
+			</div>
+		{% endfor %}
+
+	</div>
+	<div class="row mt-lg-4 mt-2">
+		{% for key, secteur in secteurs|slice(3, 4) %}
+			<div class="col-12 col-lg mx-2 mb-2 mb-lg-0 card" style="background-image: url({{ asset('uploads/secteurs/' ~ secteur.image) }})">
+				<a href="{{ path('app_secteurs_show', { slug: secteur.slug }) }}">
+					<div class="layer"></div>
+					<h3>{{ secteur.name|e }}</h3>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+
+</section>

@@ -1,0 +1,91 @@
+<?php
+
+namespace App\Controller\Admin;
+
+use App\Entity\Banner;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
+
+class BannerCrudController extends AbstractCrudController
+{
+    public static function getEntityFqcn(): string
+    {
+        return Banner::class;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            // ->add(Crud::PAGE_INDEX, Action::DETAIL);
+            ->setPermissions([
+                Action::BATCH_DELETE => 'ROLE_SUPER_ADMIN',
+                Action::DELETE => 'ROLE_SUPER_ADMIN',
+                Action::EDIT => 'ROLE_ADMIN',
+                Action::DETAIL => 'ROLE_ADMIN',
+                Action::NEW => 'ROLE_ADMIN',
+                Action::INDEX => 'ROLE_ADMIN',
+            ]);
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            // the labels used to refer to this entity in titles, buttons, etc.
+            ->setPageTitle('index', 'Gestion des bannières')
+            ->setEntityLabelInSingular('Bannière')
+            ->setEntityLabelInPlural('Bannières')
+            ->setSearchFields(['title', 'link']);
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(TextFilter::new('title', 'Titre'))
+            ->add(TextFilter::new('link', 'Lien'))
+            ->add(DateTimeFilter::new('validFrom', 'Valable à partir de'))
+            ->add(DateTimeFilter::new('validTill', "Valable jusqu'à"));
+    }
+
+    public function configureFields(string $pageName): iterable
+    {
+        if ($pageName === Crud::PAGE_INDEX) {
+            return [
+                IdField::new('id')->onlyOnIndex(),
+                ImageField::new('image', 'Image')
+                    ->setBasePath('uploads/banners/')
+                    ->setUploadDir('public/uploads/banners')
+                    ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]'),
+                TextField::new('title', 'Titre'),
+                UrlField::new('link', 'Lien'),
+                DateTimeField::new('validFrom', 'Valable à partir de'),
+                DateTimeField::new('validTill', "Valable jusqu'à"),
+                BooleanField::new('isActive', 'Etat')->setDisabled(!$this->isGranted("ROLE_ADMIN"))
+            ];
+        }
+        return [
+            IdField::new('id')->onlyOnIndex(),
+            TextField::new('title', 'Titre')->setColumns(6),
+            UrlField::new('link', 'Lien')->setColumns(6),
+            ImageField::new('image', 'Image')
+                ->setBasePath('uploads/banners/')
+                ->setUploadDir('public/uploads/banners')
+                ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]')
+                ->setHelp('Seulement .png et .jpg')
+                ->setRequired($pageName !== Crud::PAGE_EDIT),
+            DateTimeField::new('validFrom', 'Valable à partir de'),
+            DateTimeField::new('validTill', "Valable jusqu'à"),
+            BooleanField::new('isActive', 'Etat')->setPermission("ROLE_ADMIN")
+        ];
+    }
+}

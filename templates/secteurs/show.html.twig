@@ -1,0 +1,104 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}
+	Les établissements du secteur
+	{{ secteur.name }}
+{% endblock %}
+
+{% block body %}
+	<section class="show_secteurs">
+		<h1 class="title text-center pt-4">Les établissements du secteur
+			<span>{{ secteur.name }}</span>
+		</h1>
+		<div class="container">
+			<div class="row justify-content-center mb-4">
+				{% for key, etablissement in pagination %}
+					{% set idUrl = etablissement.video | parse_url %}
+
+					<div class="col-12 col-sm-6 col-lg-3 mb-4">
+						<div class="card d-flex flex-column">
+							<img src="https://img.youtube.com/vi/{{idUrl}}/hqdefault.jpg" class="card-img-top flex-grow-1" alt="{{etablissement.name}}">
+							<div class="card-img" style="background: url('{{ asset('uploads/etablissements/' ~ etablissement.logo) }}') center, #fff;"></div>
+							<h2 class="card-title">
+								({{etablissement.sigle}})
+								<span data-bs-toggle="tooltip" data-bs-placement="top" title="{{etablissement.name}}">{{etablissement.name | u.truncate(28, '...')}}</span>
+							</h2>
+							<p class="card-text">
+								{% set villes = [] %}
+								{% for ville in etablissement.villes %}
+									{% set villes = villes|merge([ville]) %}
+								{% endfor %}
+
+								{% if villes %}
+									<small class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="{{villes | join(', ')}}">
+										<i class="fa-solid fa-location-dot"></i>
+										{{ villes | join(', ') | u.truncate(35, ', et plus.') }}
+									</small>
+									<br>
+								{% endif %}
+
+								<small class="text-muted">
+									<i class="fa-regular fa-calendar-days"></i>
+									Durée de la formation:
+									{{etablissement.dureeFormation ? etablissement.dureeFormation ~ ' mois' : ''}}
+								</small>
+							</p>
+							<div class="card-play">
+								<i class="fa-regular fa-circle-play video-btn" data-bs-toggle="modal" data-src="{{idUrl}}" data-bs-target="#modalVideo"></i>
+							</div>
+							<div class="card-footer d-flex justify-content-center align-items-center gap-2">
+								<a href="javascript:void(0)" class="card-seuil" data-bs-toggle="modal" data-bs-target="#modalSeuil{{key}}">
+									<i class="fa-solid fa-list-check" data-bs-toggle="tooltip" data-bs-placement="top" title="Seuils"></i>
+								</a>
+								{% if etablissement.documentEtablissements|length > 0 %}
+									<a href="javascript:void(0)" class="card-docs" data-bs-toggle="modal" data-bs-target="#modalDocs{{key}}">
+										<i class="fa-solid fa-folder-open" data-bs-toggle="tooltip" data-bs-placement="top" title="Documents"></i>
+									</a>
+								{% endif %}
+								{% if etablissement.phone %}
+									<a href="javascript:void(0)" class="card-phone" data-bs-toggle="modal" data-bs-target="#modalTel{{key}}">
+										<i class="fa-solid fa-phone" data-bs-toggle="tooltip" data-bs-placement="top" title="Téléphone"></i>
+									</a>
+								{% endif %}
+
+								{% if etablissement.phoneWP %}
+									<a href="https://wa.me/{{etablissement.phoneWP}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Whatsapp" class="card-whatsapp" target="_blank">
+										<i class="fa-brands fa-whatsapp"></i>
+									</a>
+								{% endif %}
+
+								{% if etablissement.fb %}
+									<a href="{{etablissement.fb}}" class="card-fb" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" target="_blank">
+										<i class="fa-brands fa-facebook"></i>
+									</a>
+								{% endif %}
+								{# Modal Seuil #}
+								{{ include('secteurs/modal_seuil.html.twig') }}
+
+								{# Modal Docs #}
+								{{ include('secteurs/modal_docs.html.twig') }}
+
+								{# Modal Tel #}
+								{{ include('secteurs/modal_tel.html.twig') }}
+
+							</div>
+						</div>
+					</div>
+				{% else %}
+					<div class="text-center">
+						<h5 class=" text-uppercase ">Aucun établissement trouvé</h5>
+						<img src="{{ asset('uploads/images/notfound.png') }}" class=" mb-2">
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+
+		{# Modal video #}
+		{{ include('secteurs/modal_video.html.twig') }}
+
+		<div class="d-flex justify-content-center py-4">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+	</section>
+{% endblock %}

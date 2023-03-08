@@ -8,14 +8,19 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=NewsRepository::class)
  * @HasLifecycleCallbacks 
+ * @UniqueEntity("title")
  */
 class News
 {
     use Timestampable;
+
+    public const NUM_ITEMS_PER_PAGE = 12;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -39,11 +44,6 @@ class News
      * @Assert\NotBlank
      */
     private $content;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $link;
 
     /**
      * @ORM\Column(type="boolean", options={"default": "false"})
@@ -112,18 +112,6 @@ class News
     public function setContent(string $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getLink(): ?string
-    {
-        return $this->link;
-    }
-
-    public function setLink(?string $link): self
-    {
-        $this->link = $link;
 
         return $this;
     }
