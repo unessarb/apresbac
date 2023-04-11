@@ -15,10 +15,26 @@
 				{% for key, etablissement in pagination %}
 					{% set idUrl = etablissement.video | parse_url %}
 
-					<div class="col-12 col-sm-6 col-lg-3 mb-4">
+					<div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-4">
 						<div class="card d-flex flex-column">
 							<img src="https://img.youtube.com/vi/{{idUrl}}/hqdefault.jpg" class="card-img-top flex-grow-1" alt="{{etablissement.name}}">
 							<div class="card-img" style="background: url('{{ asset('uploads/etablissements/' ~ etablissement.logo) }}') center, #fff;"></div>
+							{% if etablissement.news and etablissement.news.dateLimitInscription %}
+								{% set dateLimitInscription = etablissement.news.dateLimitInscription %}
+								{% set isOpenForInscription = date() < dateLimitInscription %}
+								{% if isOpenForInscription %}
+									<a href="{{ path('app_news_show', { slug: etablissement.news.slug }) }}" target="_blank" class="card-inscription text-uppercase text-center">
+										Inscription ouverte
+										<br>
+										Date limite:
+										{{ dateLimitInscription | date('Y/m/d à H:i')}}
+									</a>
+									<span class="card-pulse" data-bs-toggle="tooltip" data-bs-placement="top" title="Inscription ouverte"></span>
+									<span class="card-marker"></span>
+								{% endif %}
+
+							{% endif %}
+
 							<h2 class="card-title">
 								({{etablissement.sigle}})
 								<span data-bs-toggle="tooltip" data-bs-placement="top" title="{{etablissement.name}}">{{etablissement.name | u.truncate(28, '...')}}</span>
@@ -32,16 +48,55 @@
 								{% if villes %}
 									<small class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="{{villes | join(', ')}}">
 										<i class="fa-solid fa-location-dot"></i>
-										{{ villes | join(', ') | u.truncate(35, ', et plus.') }}
+										{{ villes | join(', ') | u.truncate(38, ', et plus...') }}
 									</small>
 									<br>
 								{% endif %}
 
 								<small class="text-muted">
 									<i class="fa-regular fa-calendar-days"></i>
-									Durée de la formation:
+									<strong>Durée de la formation:</strong>
 									{{etablissement.dureeFormation ? etablissement.dureeFormation ~ ' mois' : ''}}
 								</small>
+								<br>
+
+
+								{% if etablissement.typeBac %}
+
+									<small class="text-muted">
+										<i class="fa-solid fa-graduation-cap"></i>
+										<strong>Type bac:</strong>
+										<span data-bs-toggle="tooltip" data-bs-placement="top" title="{{etablissement.typeBac | join(', ')}}">
+											{{ etablissement.typeBac | join(', ') | u.truncate(38, ', et plus...') }}
+										</span>
+									</small>
+									<br>
+
+								{% endif %}
+
+								{% if etablissement.diplome %}
+
+									<small class="text-muted">
+										<i class="fa-solid fa-certificate"></i>
+										<strong>Diplôme:</strong>
+										<span data-bs-toggle="tooltip" data-bs-placement="top" title="{{etablissement.diplome}}">
+											{{ etablissement.diplome | u.truncate(40, '...') }}
+										</span>
+									</small>
+									<br>
+								{% endif %}
+
+								{% if etablissement.modeAdmis %}
+
+									<small class="text-muted">
+										<i class="fa-solid fa-check-double"></i>
+										<strong>Mode d'admis:</strong>
+										<span data-bs-toggle="tooltip" data-bs-placement="top" title="{{etablissement.modeAdmis}}">
+											{{ etablissement.modeAdmis | u.truncate(40, '...') }}
+										</span>
+									</small>
+									<br>
+								{% endif %}
 							</p>
 							<div class="card-play">
 								<i class="fa-regular fa-circle-play video-btn" data-bs-toggle="modal" data-src="{{idUrl}}" data-bs-target="#modalVideo"></i>
@@ -70,6 +125,12 @@
 								{% if etablissement.fb %}
 									<a href="{{etablissement.fb}}" class="card-fb" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" target="_blank">
 										<i class="fa-brands fa-facebook"></i>
+									</a>
+								{% endif %}
+
+								{% if etablissement.website %}
+									<a href="{{etablissement.website}}" class="card-website" data-bs-toggle="tooltip" data-bs-placement="top" title="Site web" target="_blank">
+										<i class="fa-solid fa-globe"></i>
 									</a>
 								{% endif %}
 								{# Modal Seuil #}

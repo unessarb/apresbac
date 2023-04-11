@@ -81,7 +81,6 @@ class BannerCrudController extends AbstractCrudController
                 ->setBasePath('uploads/banners/')
                 ->setUploadDir('public/uploads/banners')
                 ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]')
-                ->setHelp('Seulement .png et .jpg')
                 ->setRequired($pageName !== Crud::PAGE_EDIT),
             DateTimeField::new('validFrom', 'Valable à partir de'),
             DateTimeField::new('validTill', "Valable jusqu'à"),

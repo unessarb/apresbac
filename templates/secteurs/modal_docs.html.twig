@@ -20,7 +20,12 @@
 							<tr>
 								<td>{{doc.designation}}</td>
 								<td>
-									<a href="{{doc.link}}" target="_blank">{{doc.link}}</a>
+									{% if doc.link %}
+										<a href="{{doc.link}}" target="_blank">{{doc.link}}</a>
+									{% endif %}
+									{% if doc.file %}
+										<a href="{{ asset('uploads/etablissement_docs/' ~ doc.file)}}" download>Télécharger</a>
+									{% endif %}
 								</td>
 							</tr>
 						{% endfor %}

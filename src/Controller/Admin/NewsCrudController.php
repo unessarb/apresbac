@@ -20,6 +20,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Image;
 
 class NewsCrudController extends AbstractCrudController
 {
@@ -85,6 +87,8 @@ class NewsCrudController extends AbstractCrudController
                         ->setParameter('enabled', true);
                 })
                 ->setColumns(6);
+            yield DateTimeField::new('dateLimitInscription', 'Date limite inscription')->setColumns('col-md-6 offset-md-6')
+                ->addCssClass('date_limite_inscription d-none')->addWebpackEncoreEntries('admin');
             yield TextEditorField::new('content', 'Contenu')->setColumns(12);
             yield ImageField::new('image', 'Image')
                 ->setBasePath('uploads/news/')
@@ -92,6 +96,7 @@ class NewsCrudController extends AbstractCrudController
                 ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]')
                 ->setColumns(6)
                 ->setRequired($pageName !== Crud::PAGE_EDIT);
+
             yield DateTimeField::new('publishedAt', 'Publiée le')->setColumns(12);
             yield BooleanField::new('isActive', 'Etat')->setColumns(12)->setPermission("ROLE_SUPER_ADMIN");
             yield BooleanField::new('isPublic', 'Grand public')->setColumns(12)->setPermission("ROLE_ADMIN");

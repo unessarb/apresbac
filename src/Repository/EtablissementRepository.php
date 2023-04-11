@@ -59,6 +59,40 @@ class EtablissementRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery();
     }
 
+    /**
+     * @return Etablissement[] Returns an array of Etablissement objects
+     */
+    public function createAllEtablissementQuery(): Query
+    {
+        $queryBuilder = $this->createQueryBuilder('e')
+            ->andWhere('e.isPublic = :isPublic')
+            ->andWhere('e.isActive = :isActive')
+            ->setParameter('isPublic', true)
+            ->setParameter('isActive', true)
+            ->orderBy('e.name', 'ASC');
+
+
+        return $queryBuilder->getQuery();
+    }
+
+    /**
+     * @return Etablissement[] Returns an array of Etablissement objects
+     */
+    public function createSearchEtablissementQuery($mots): Query
+    {
+        $queryBuilder = $this->createQueryBuilder('e')
+            ->andWhere('MATCH_AGAINST(e.name, e.sigle, e.tagsText, e.secteursText, e.villesText) AGAINST (:mots boolean)>0')
+            ->andWhere('e.isPublic = :isPublic')
+            ->andWhere('e.isActive = :isActive')
+            ->setParameter('mots', $mots)
+            ->setParameter('isPublic', true)
+            ->setParameter('isActive', true)
+            ->orderBy('e.name', 'ASC');
+
+
+        return $queryBuilder->getQuery();
+    }
+
     //    public function findOneBySomeField($value): ?Etablissement
     //    {
     //        return $this->createQueryBuilder('e')

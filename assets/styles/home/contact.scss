@@ -1,0 +1,25 @@
+.contact{
+    margin-bottom: 60px;
+    & .title{
+        background-color: $secondary;
+        text-transform: uppercase;
+        color: white;
+        position: relative;
+        padding-top: 50px!important;
+        padding-bottom: 50px;
+        font-weight: lighter;
+        font-size: 2rem;
+        margin-bottom: 40px;
+        & span {
+            font-weight: bold;
+        }
+       
+    }
+    & > p{
+        color: $secondary;
+        text-align: center;
+        font-size: 1.1rem;
+        margin-bottom: 50px;
+    }
+    
+}

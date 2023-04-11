@@ -1,12 +1,15 @@
 {% extends 'layouts/base.html.twig' %}
 
 {% block title %}
-	Accueil | Après bac
+	Accueil | APRESBAC
 {% endblock %}
 
 {% block body %}
 	{# Slider #}
 	{{ include('home/carousel.html.twig') }}
+
+	{# Bloc Search #}
+	{{ include('home/search.html.twig') }}
 
 	{# Bloc Secteurs #}
 	{{ include('home/secteurs.html.twig') }}

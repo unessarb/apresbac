@@ -1,0 +1,26 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}
+	Inscription Pack Special | Apresbac
+{% endblock %}
+
+{% block body %}
+	<section class="contact">
+		<h1 class="title text-center pt-4">Pack
+			<span>Special</span>
+		</h1>
+		<p class="text-center container">L'espace d'orientation "apresbac" est dédiée aux élèves du terminal du bac au Maroc. Son objectif est de leur permettre de recevoir les annonces des concours aux grands écoles via whatsapp et email.</p>
+		<div class="container ">
+			<div class="row justify-content-center">
+				<div class="col-12 col-lg-6">
+					{{ include('shared/_flash_messages.html.twig') }}
+					{{ form_start(form) }}
+					{{ form_widget(form) }}
+					<button type="submit" class="btn btn-primary w-100">Envoyer</button>
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+
+	</section>
+{% endblock %}

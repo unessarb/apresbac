@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
@@ -42,13 +43,14 @@ class DocumentEtablissementCrudController extends AbstractCrudController
     {
         if ($pageName === Crud::PAGE_INDEX) {
             yield IdField::new('id');
+            yield ImageField::new('file', 'Fichier')->setBasePath('uploads/etablissement_docs/');
             yield TextField::new('designation', 'Désignation');
             yield TextField::new('etablissement');
             yield TextField::new('link', 'Lien');
             yield DateTimeField::new('createdAt', 'Crée le')->setFormat("yyyy-MM-dd 'à' HH:mm:ss");
             yield DateTimeField::new('updatedAt', 'Modifiée le')->setFormat("yyyy-MM-dd 'à' HH:mm:ss");
         } else {
-            yield TextField::new('designation', 'Désignation')->setColumns(12);
+            yield TextField::new('designation', 'Désignation')->setColumns(6);
             yield AssociationField::new('etablissement')
                 ->setQueryBuilder(function (QueryBuilder $qb) {
                     $qb->andWhere('entity.isActive = :enabled')
@@ -56,6 +58,12 @@ class DocumentEtablissementCrudController extends AbstractCrudController
                 })
                 ->setColumns(6);
             yield TextField::new('link', 'Lien')->setColumns(6);
+            yield ImageField::new('file', 'Fichier')
+                ->setBasePath('uploads/etablissement_docs/')
+                ->setUploadDir('public/uploads/etablissement_docs')
+                ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]')
+                ->setColumns(6)
+                ->setRequired(false);
         }
     }
 }

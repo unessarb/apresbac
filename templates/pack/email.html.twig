@@ -1,0 +1,28 @@
+<h1>Bonjour!</h1>
+<p>
+	Une inscription reçu depuis la page
+	<strong>{{page}}.</strong>
+</p>
+<p>
+	les infromations de la personne qui vous contact:
+</p>
+<strong>Nom et prénom</strong>
+:
+{{pack.name}}
+<br>
+
+<strong>Email</strong>
+:
+{{pack.email}}
+<br>
+<strong>Numéro de téléphone pour WhatsApp</strong>
+:
+{{pack.phone}}
+<br>
+
+<strong>Crée le</strong>
+:
+{{pack.createdAt | date('d/m/Y à H:i')}}
+<br>
+
+<p>A la vôtre !</p>

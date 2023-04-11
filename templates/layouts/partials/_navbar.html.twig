@@ -3,7 +3,7 @@
 		<div class="container-lg my-md-2">
 			<a class="navbar-brand d-flex align-items-center" href="{{path('app_home')}}">
 				<img src="{{ asset('uploads/images/apresbac.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top me-2">
-				Après bac
+				APRES<strong>BAC</strong>
 			</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -14,10 +14,10 @@
 						<a class="nav-link {% if app.request.get('_route') == 'app_home' %}active{% endif %} " href=" {{path('app_home')}} ">Accueil</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_news') }}">Actualités</a>
+						<a class="nav-link {% if app.request.get('_route') == 'app_news' %}active{% endif %} " href="{{ path('app_news') }}">Actualités</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Contact</a>
+						<a class="nav-link {% if app.request.get('_route') == 'app_contact' %}active{% endif %}" href="{{ path('app_contact') }}">Contact</a>
 					</li>
 				</ul>
 			</div>

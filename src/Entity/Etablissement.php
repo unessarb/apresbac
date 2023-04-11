@@ -16,6 +16,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass=EtablissementRepository::class)
  * @HasLifecycleCallbacks 
  * @UniqueEntity("name")
+ * @ORM\Table(name="etablissement", indexes={
+ *  @ORM\Index(
+ *      columns={"name", "sigle", "tags_text", "secteurs_text", "villes_text"},
+ *      flags={"fulltext"}
+ * )
+ * })
  */
 class Etablissement
 {
@@ -181,6 +187,27 @@ class Etablissement
      * @ORM\ManyToMany(targetEntity=Ville::class)
      */
     private $villes;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tagsText;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $secteursText;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $villesText;
+
+    /**
+     * @ORM\OneToOne(targetEntity=News::class, cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $news;
 
 
     public function __construct()
@@ -589,6 +616,54 @@ class Etablissement
     public function removeVille(Ville $ville): self
     {
         $this->villes->removeElement($ville);
+
+        return $this;
+    }
+
+    public function getTagsText(): ?string
+    {
+        return $this->tagsText;
+    }
+
+    public function setTagsText(?string $tagsText): self
+    {
+        $this->tagsText = $tagsText;
+
+        return $this;
+    }
+
+    public function getSecteursText(): ?string
+    {
+        return $this->secteursText;
+    }
+
+    public function setSecteursText(?string $secteursText): self
+    {
+        $this->secteursText = $secteursText;
+
+        return $this;
+    }
+
+    public function getVillesText(): ?string
+    {
+        return $this->villesText;
+    }
+
+    public function setVillesText(?string $villesText): self
+    {
+        $this->villesText = $villesText;
+
+        return $this;
+    }
+
+    public function getNews(): ?News
+    {
+        return $this->news;
+    }
+
+    public function setNews(?News $news): self
+    {
+        $this->news = $news;
 
         return $this;
     }

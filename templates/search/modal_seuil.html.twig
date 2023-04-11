@@ -1,0 +1,55 @@
+<div class="modal fade" id="modalSeuil{{key}}" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Les seuils de l'établissement
+					<strong>{{etablissement.sigle}}</strong>
+				</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Branche</th>
+							<th scope="col">Note</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Sciences mathématiques</td>
+							<td>{{ etablissement.seuilSM }}</td>
+						</tr>
+						<tr>
+							<td>Sciences Physiques</td>
+							<td>{{ etablissement.seuilSP }}</td>
+						</tr>
+						<tr>
+							<td>Sciences de la Vie et de la Terre</td>
+							<td>{{ etablissement.seuilSVT }}</td>
+						</tr>
+						<tr>
+							<td>Sciences agronomiques</td>
+							<td>{{ etablissement.seuilSAgro }}</td>
+						</tr>
+						<tr>
+							<td>Sciences économiques</td>
+							<td>{{ etablissement.seuilEco }}</td>
+						</tr>
+						<tr>
+							<td>Sciences et Technologies Mécaniques</td>
+							<td>{{ etablissement.seuilSTM }}</td>
+						</tr>
+						<tr>
+							<td>Sciences et Technologies Electriques</td>
+							<td>{{ etablissement.seuilSTE }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>

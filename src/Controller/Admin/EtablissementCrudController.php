@@ -124,6 +124,7 @@ class EtablissementCrudController extends AbstractCrudController
                 ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]')
                 ->setColumns(6)
                 ->setRequired($pageName !== Crud::PAGE_EDIT);
+
             yield BooleanField::new('isActive', 'Etat')->setColumns(6)->setPermission("ROLE_SUPER_ADMIN");
             yield BooleanField::new('isPublic', 'Grand public')->setColumns(6)->setPermission("ROLE_ADMIN");
 

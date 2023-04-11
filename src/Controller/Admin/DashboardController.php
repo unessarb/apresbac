@@ -3,9 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Banner;
+use App\Entity\Contact;
 use App\Entity\DocumentEtablissement;
 use App\Entity\Etablissement;
 use App\Entity\News;
+use App\Entity\PackNormal;
+use App\Entity\PackSpecial;
 use App\Entity\Secteur;
 use App\Entity\Tags;
 use App\Entity\User;
@@ -42,13 +45,22 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section();
         yield MenuItem::linkToUrl('Visit public website', 'fa fa-home', '/');
+        yield MenuItem::section("Etablissemnt");
         yield MenuItem::linkToCrud('Etablissements', 'fas fa-graduation-cap', Etablissement::class);
         yield MenuItem::linkToCrud('Docs. Etablissement', 'fas fa-folder-open', DocumentEtablissement::class);
+        yield MenuItem::section("Actualités");
         yield MenuItem::linkToCrud('Actualités', 'fas fa-newspaper', News::class);
+        yield MenuItem::section("Utilisateur");
         yield MenuItem::linkToCrud('Utilisateur', 'fas fa-users', User::class)->setPermission("ROLE_SUPER_ADMIN");
+        yield MenuItem::section("Bannières / configuration");
         yield MenuItem::linkToCrud('Bannières', 'fas fa-tv', Banner::class)->setPermission("ROLE_ADMIN");
         yield MenuItem::linkToCrud('Secteurs', 'fas fa-list', Secteur::class)->setPermission("ROLE_ADMIN");
         yield MenuItem::linkToCrud('Villes', 'fas fa-city', Ville::class)->setPermission("ROLE_ADMIN");
         yield MenuItem::linkToCrud('Tags', 'fas fa-tags', Tags::class)->setPermission("ROLE_ADMIN");
+
+        yield MenuItem::section("Inscription / Contact")->setPermission("ROLE_ADMIN");
+        yield MenuItem::linkToCrud('Contact', 'fas fa-envelope', Contact::class)->setPermission("ROLE_ADMIN");
+        yield MenuItem::linkToCrud('Packs Normal', 'fas fa-star-half', PackNormal::class)->setPermission("ROLE_ADMIN");
+        yield MenuItem::linkToCrud('PacKs Special', 'fas fa-star', PackSpecial::class)->setPermission("ROLE_ADMIN");
     }
 }

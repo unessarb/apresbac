@@ -25,7 +25,7 @@ class SecurityController extends AbstractController
 
         return $this->render('@EasyAdmin/page/login.html.twig', [
             'page_title' => "<div class='d-flex align-items-center flex-column mb-4'><img src='uploads/images/apresbac.png' alt='Logo' height='70' class='d-inline-block align-text-top mb-2'>
-            Après bac adminstration</div>",
+            APRESBAC adminstration</div>",
             'username_label' => 'Email',
             'sign_in_label' => 'Connectez-vous',
             'error' => $error,
@@ -33,6 +33,8 @@ class SecurityController extends AbstractController
             'csrf_token_intention' => 'authenticate',
             'username_parameter' => 'email',
             'password_parameter' => 'password',
+            'forgot_password_enabled' => true,
+            'forgot_password_path' => '/reset-password'
         ]);
     }
 

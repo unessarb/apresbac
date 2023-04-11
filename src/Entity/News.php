@@ -63,7 +63,7 @@ class News
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isPublic;
+    private $isPublic = true;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
@@ -71,9 +71,19 @@ class News
     private $publishedAt;
 
     /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $dateLimitInscription;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Etablissement::class, inversedBy="news")
      */
     private $etablissement;
+
+    public function __construct()
+    {
+        $this->publishedAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -172,6 +182,18 @@ class News
     public function setPublishedAt(\DateTimeImmutable $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function getDateLimitInscription(): ?\DateTimeImmutable
+    {
+        return $this->dateLimitInscription;
+    }
+
+    public function setDateLimitInscription($dateLimitInscription): self
+    {
+        $this->dateLimitInscription = $dateLimitInscription;
 
         return $this;
     }

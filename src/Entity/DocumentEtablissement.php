@@ -28,7 +28,7 @@ class DocumentEtablissement
     private $designation;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url
      */
     private $link;
@@ -38,6 +38,11 @@ class DocumentEtablissement
      * @ORM\JoinColumn(nullable=false)
      */
     private $etablissement;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $file;
 
     public function getId(): ?int
     {
@@ -61,7 +66,7 @@ class DocumentEtablissement
         return $this->link;
     }
 
-    public function setLink(string $link): self
+    public function setLink(?string $link): self
     {
         $this->link = $link;
 
@@ -76,6 +81,18 @@ class DocumentEtablissement
     public function setEtablissement(?Etablissement $etablissement): self
     {
         $this->etablissement = $etablissement;
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(?string $file): self
+    {
+        $this->file = $file;
 
         return $this;
     }

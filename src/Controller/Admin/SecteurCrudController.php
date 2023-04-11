@@ -62,8 +62,7 @@ class SecteurCrudController extends AbstractCrudController
                 ImageField::new('image', 'Image')
                     ->setBasePath('uploads/secteurs/')
                     ->setUploadDir('public/uploads/secteurs')
-                    ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]')
-                    ->setHelp('Seulement .png et .jpg'),
+                    ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]'),
                 TextField::new('name', 'Désignation'),
                 TextEditorField::new('description', 'Description'),
                 BooleanField::new('isActive', 'Etat')->setDisabled(!$this->isGranted("ROLE_ADMIN")),
@@ -78,7 +77,6 @@ class SecteurCrudController extends AbstractCrudController
                 ->setBasePath('uploads/secteurs/')
                 ->setUploadDir('public/uploads/secteurs')
                 ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]')
-                ->setHelp('Seulement .png et .jpg')
                 ->setRequired($pageName !== Crud::PAGE_EDIT),
             BooleanField::new('isActive', 'Etat')->setPermission("ROLE_ADMIN"),
 

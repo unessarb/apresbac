@@ -1,0 +1,25 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}
+	Contactez-nous | Apresbac
+{% endblock %}
+
+{% block body %}
+	<section class="contact">
+		<h1 class="title text-center pt-4">Contactez-<span>Nous</span>
+		</h1>
+		<p class="text-center container">Nous sommes toujours heureux d'avoir de vos nouvelles ! Utilisez le formulaire de contact ci-dessous pour nous envoyer vos commentaires, questions ou suggestions. Nous vous répondrons dans les meilleurs délais.</p>
+		<div class="container ">
+			<div class="row justify-content-center">
+				<div class="col-12 col-lg-6">
+					{{ include('shared/_flash_messages.html.twig') }}
+					{{ form_start(form) }}
+					{{ form_widget(form) }}
+					<button type="submit" class="btn btn-primary w-100">Envoyer</button>
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+
+	</section>
+{% endblock %}

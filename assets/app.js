@@ -43,6 +43,11 @@ $(document).ready(function () {
         // a poor man's stop video
         $("#video").attr('src', "https://www.youtube.com/embed/" + $videoSrc);
     })
+
+
+    $("#News_etablissement").on("change", function (e) {
+        console.log("cocoooooooooooooooooo");
+    })
     // document ready  
 });
 
