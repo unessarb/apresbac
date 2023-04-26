@@ -1,0 +1,116 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}
+	{% if mots %}
+		Les résultats de recherche pour "{{ mots }}"
+	{% else %}
+		tous les établissements
+	{% endif %}
+{% endblock %}
+
+{% block body %}
+	<section class="show_secteurs">
+		<div
+			class="container">
+			{# Bloc Search #}
+			{{ include('etablissement/search.html.twig') }}
+			<div class="row justify-content-center mb-4">
+				{% for key, etablissement in pagination %}
+					{% set idUrl = etablissement.video | parse_url %}
+
+					<div class="col-12 col-sm-6 col-lg-3 mb-4">
+						<div class="card d-flex flex-column">
+							<img src="https://img.youtube.com/vi/{{idUrl}}/hqdefault.jpg" class="card-img-top" alt="{{etablissement.name}}">
+							<h2 class="card-title p-2 flex-grow-1 d-flex align-items-center">
+								<span>
+									{{etablissement.sigle}}
+									-
+									<span data-bs-toggle="tooltip" data-bs-placement="top" title="{{etablissement.name}}">{{etablissement.name | u.truncate(28, '...')}}</span>
+								</span>
+							</h2>
+							<div class="card-play video-btn" data-bs-toggle="modal" data-src="{{idUrl}}" data-bs-target="#modalVideo"></div>
+							<div class="card-footer d-flex justify-content-center align-items-center gap-2">
+								<a href="javascript:void(0)" class="card-details" data-bs-toggle="modal" data-bs-target="#modalDetails{{key}}">
+									<i class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Plus d'infos"></i>
+								</a>
+								<a href="javascript:void(0)" class="card-seuil" data-bs-toggle="modal" data-bs-target="#modalSeuil{{key}}">
+									<i class="fa-solid fa-list-check" data-bs-toggle="tooltip" data-bs-placement="top" title="Seuils"></i>
+								</a>
+								{% if etablissement.documentEtablissements|length > 0 %}
+									<a href="javascript:void(0)" class="card-docs" data-bs-toggle="modal" data-bs-target="#modalDocs{{key}}">
+										<i class="fa-solid fa-folder-open" data-bs-toggle="tooltip" data-bs-placement="top" title="Documents"></i>
+									</a>
+								{% endif %}
+								{% if etablissement.phone %}
+									<a href="javascript:void(0)" class="card-phone" data-bs-toggle="modal" data-bs-target="#modalTel{{key}}">
+										<i class="fa-solid fa-phone" data-bs-toggle="tooltip" data-bs-placement="top" title="Téléphone"></i>
+									</a>
+								{% endif %}
+
+								{% if etablissement.phoneWP %}
+									<a href="https://wa.me/{{etablissement.phoneWP}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Whatsapp" class="card-whatsapp" target="_blank">
+										<i class="fa-brands fa-whatsapp"></i>
+									</a>
+								{% endif %}
+
+								{% if etablissement.fb %}
+									<a href="{{etablissement.fb}}" class="card-fb" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" target="_blank">
+										<i class="fa-brands fa-facebook"></i>
+									</a>
+								{% endif %}
+
+								{% if etablissement.website %}
+									<a href="{{etablissement.website}}" class="card-website" data-bs-toggle="tooltip" data-bs-placement="top" title="Site web" target="_blank">
+										<i class="fa-solid fa-globe"></i>
+									</a>
+								{% endif %}
+								{% if etablissement.news and etablissement.news.dateLimitInscription %}
+									{% set dateLimitInscription = etablissement.news.dateLimitInscription %}
+									{% set isOpenForInscription = date() < dateLimitInscription %}
+									{% if isOpenForInscription %}
+										<a href="javascript:void(0)" class="card-inscription" data-bs-toggle="modal" data-bs-target="#modalInscription{{key}}">
+											<div class="wrapper" data-bs-toggle="tooltip" data-bs-placement="top" title="Inscription ouverte">
+												<div class="pulse">
+													<i class="fa-solid fa-pencil"></i>
+												</div>
+											</div>
+										</a>
+									{% endif %}
+
+								{% endif %}
+								{# Modal Seuil #}
+								{{ include('etablissement/modal_seuil.html.twig') }}
+
+								{# Modal Details #}
+								{{ include('etablissement/modal_details.html.twig') }}
+
+								{# Modal Inscription #}
+								{{ include('etablissement/modal_inscription.html.twig') }}
+
+								{# Modal Docs #}
+								{{ include('etablissement/modal_docs.html.twig') }}
+
+								{# Modal Tel #}
+								{{ include('etablissement/modal_tel.html.twig') }}
+
+							</div>
+						</div>
+					</div>
+				{% else %}
+					<div class="text-center">
+						<h5 class=" text-uppercase ">Aucun établissement trouvé</h5>
+						<img src="{{ asset('uploads/images/notfound.png') }}" class=" mb-2">
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-center py-4">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+
+		{# Modal video #}
+		{{ include('etablissement/modal_video.html.twig') }}
+
+	</section>
+{% endblock %}

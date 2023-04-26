@@ -1,5 +1,0 @@
-{% for key, secteur in secteurs %}
-	<li>
-		<a href="{{ path('app_secteurs_show', { slug: secteur.slug }) }}">{{ secteur.name|e }}</a>
-	</li>
-{% endfor %}

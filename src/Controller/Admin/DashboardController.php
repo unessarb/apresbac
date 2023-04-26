@@ -4,11 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Banner;
 use App\Entity\Contact;
+use App\Entity\DocNews;
 use App\Entity\DocumentEtablissement;
 use App\Entity\Etablissement;
 use App\Entity\News;
 use App\Entity\PackNormal;
 use App\Entity\PackSpecial;
+use App\Entity\Partenaire;
 use App\Entity\Secteur;
 use App\Entity\Tags;
 use App\Entity\User;
@@ -50,6 +52,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Docs. Etablissement', 'fas fa-folder-open', DocumentEtablissement::class);
         yield MenuItem::section("Actualités");
         yield MenuItem::linkToCrud('Actualités', 'fas fa-newspaper', News::class);
+        yield MenuItem::linkToCrud('Docs. Actualité', 'fas fa-folder-open', DocNews::class);
+
         yield MenuItem::section("Utilisateur");
         yield MenuItem::linkToCrud('Utilisateur', 'fas fa-users', User::class)->setPermission("ROLE_SUPER_ADMIN");
         yield MenuItem::section("Bannières / configuration");
@@ -62,5 +66,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Contact', 'fas fa-envelope', Contact::class)->setPermission("ROLE_ADMIN");
         yield MenuItem::linkToCrud('Packs Normal', 'fas fa-star-half', PackNormal::class)->setPermission("ROLE_ADMIN");
         yield MenuItem::linkToCrud('PacKs Special', 'fas fa-star', PackSpecial::class)->setPermission("ROLE_ADMIN");
+
+        yield MenuItem::section("Partenaires")->setPermission("ROLE_ADMIN");
+        yield MenuItem::linkToCrud('Partenaires', 'fas fa-handshake', Partenaire::class)->setPermission("ROLE_ADMIN");
     }
 }

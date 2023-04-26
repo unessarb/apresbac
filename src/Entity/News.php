@@ -4,22 +4,21 @@ namespace App\Entity;
 
 use App\Entity\Traits\Timestampable;
 use App\Repository\NewsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=NewsRepository::class)
  * @HasLifecycleCallbacks 
- * @UniqueEntity("title")
  */
 class News
 {
     use Timestampable;
 
-    public const NUM_ITEMS_PER_PAGE = 12;
+    public const NUM_ITEMS_PER_PAGE = 20;
 
     /**
      * @ORM\Id
@@ -30,25 +29,9 @@ class News
 
     /**
      * @ORM\Column(type="string", length=255)
-     */
-    private $title;
-
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     * @Gedmo\Slug(fields={"title"}, updatable=false)
-     */
-    private $slug;
-
-    /**
-     * @ORM\Column(type="text")
      * @Assert\NotBlank
      */
-    private $content;
-
-    /**
-     * @ORM\Column(type="boolean", options={"default": "false"})
-     */
-    private $isFavorite = false;
+    private $title;
 
     /**
      * @ORM\Column(type="boolean")
@@ -56,19 +39,9 @@ class News
     private $isActive;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isPublic = true;
-
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
-    private $publishedAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
@@ -80,9 +53,24 @@ class News
      */
     private $etablissement;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private $publishedBy;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private $updatedBy;
+
+    /**
+     * @ORM\OneToMany(targetEntity=DocNews::class, mappedBy="news")
+     */
+    private $docNews;
+
     public function __construct()
     {
-        $this->publishedAt = new \DateTimeImmutable();
+        $this->docNews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,42 +86,6 @@ class News
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
-
-    public function setContent(string $content): self
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    public function isIsFavorite(): ?bool
-    {
-        return $this->isFavorite;
-    }
-
-    public function setIsFavorite(bool $isFavorite): self
-    {
-        $this->isFavorite = $isFavorite;
 
         return $this;
     }
@@ -155,33 +107,9 @@ class News
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
-
-        return $this;
-    }
-
-    public function isIsPublic(): ?bool
-    {
-        return $this->isPublic;
-    }
-
-    public function setIsPublic(bool $isPublic): self
-    {
-        $this->isPublic = $isPublic;
-
-        return $this;
-    }
-
-    public function getPublishedAt(): ?\DateTimeImmutable
-    {
-        return $this->publishedAt;
-    }
-
-    public function setPublishedAt(\DateTimeImmutable $publishedAt): self
-    {
-        $this->publishedAt = $publishedAt;
 
         return $this;
     }
@@ -208,5 +136,64 @@ class News
         $this->etablissement = $etablissement;
 
         return $this;
+    }
+
+    public function getPublishedBy(): ?User
+    {
+        return $this->publishedBy;
+    }
+
+    public function setPublishedBy(?User $publishedBy): self
+    {
+        $this->publishedBy = $publishedBy;
+
+        return $this;
+    }
+
+    public function getUpdatedBy(): ?User
+    {
+        return $this->updatedBy;
+    }
+
+    public function setUpdatedBy(?User $updatedBy): self
+    {
+        $this->updatedBy = $updatedBy;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DocNews>
+     */
+    public function getDocNews(): Collection
+    {
+        return $this->docNews;
+    }
+
+    public function addDocNews(DocNews $docNews): self
+    {
+        if (!$this->docNews->contains($docNews)) {
+            $this->docNews[] = $docNews;
+            $docNews->setNews($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocNews(DocNews $docNews): self
+    {
+        if ($this->docNews->removeElement($docNews)) {
+            // set the owning side to null (unless already changed)
+            if ($docNews->getNews() === $this) {
+                $docNews->setNews(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 }

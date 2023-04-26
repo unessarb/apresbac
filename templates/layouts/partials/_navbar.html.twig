@@ -1,20 +1,57 @@
 <header>
-	<nav class="navbar navbar-expand-lg bg-white">
-		<div class="container-lg my-md-2">
-			<a class="navbar-brand d-flex align-items-center" href="{{path('app_home')}}">
-				<img src="{{ asset('uploads/images/apresbac.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top me-2">
-				APRES<strong>BAC</strong>
-			</a>
+	<div class="top-navbar p-1">
+		<div class="container">
+			<div class="d-flex justify-content-end align-items-center gap-3">
+				<a href="{{path('app_connection')}}" class="btn btn-sm btn-connexion">Connexion</a>
+				<a href="#" class="btn btn-sm btn-inscription">Inscription</a>
+				<div class="footer-social-icon">
+					<a href="https://www.facebook.com/profile.php?id=100089997335436" target="_blank">
+						<i class="fab fa-facebook-f"></i>
+					</a>
+					<a href="https://www.instagram.com/apresbacdotcom/" target="_blank">
+						<i class="fab fa-instagram "></i>
+					</a>
+					<a href="https://www.youtube.com/@apresbac7909" target="_blank">
+						<i class="fab fa-youtube "></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container py-4">
+		<div class="d-flex justify-content-between align-items-center">
+			<div>
+				<a class="navbar-brand d-flex align-items-center" href="{{path('app_home')}}">
+					<img src="{{ asset('uploads/images/apresbac.png') }}" alt="Logo" height="80" class="d-inline-block align-text-top me-2">
+					<span>APRES<strong>BAC</strong>
+					</span>
+				</a>
+			</div>
+			<div class="d-none d-lg-inline">
+				{{ render(controller('App\\Controller\\HomeController::carousel')) }}
+			</div>
+		</div>
+
+	</div>
+	<nav class="navbar sticky-top navbar-expand-md bg">
+		<div class="container">
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
 						<a class="nav-link {% if app.request.get('_route') == 'app_home' %}active{% endif %} " href=" {{path('app_home')}} ">Accueil</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link {% if app.request.get('_route') == 'app_news' %}active{% endif %} " href="{{ path('app_news') }}">Actualités</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link {% if app.request.get('_route') == 'app_etablissement' %}active{% endif %}" href="{{ path('app_etablissement') }}">Etablissments</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link {% if app.request.get('_route') == 'app_etablissement_etudier_etranger' %}active{% endif %}" href="{{ path('app_etablissement_etudier_etranger') }}">Etudier à l'étranger</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link {% if app.request.get('_route') == 'app_contact' %}active{% endif %}" href="{{ path('app_contact') }}">Contact</a>

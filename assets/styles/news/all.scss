@@ -1,50 +1,59 @@
-.all_news{
-    margin-bottom: 20px;
-    & .title{
-        background-color: $secondary;
-        text-transform: uppercase;
-        color: white;
-        position: relative;
-        padding-top: 50px!important;
-        padding-bottom: 50px;
-        font-weight: lighter;
-        font-size: 2rem;
-        margin-bottom: 40px;
-        & span {
-            font-weight: bold;
+.all_news {
+  padding-bottom: 20px;
+  height: 100%;
+  & .title {
+    font-family: "Cairo", sans-serif;
+    text-transform: uppercase;
+    color: $secondary;
+    position: relative;
+    padding-top: 50px !important;
+    padding-bottom: 50px;
+    font-weight: lighter;
+    font-size: 2rem;
+    & span {
+      font-weight: bold;
+    }
+  }
+  &--img {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    border: 4px solid #ddd;
+    margin-left: 10px;
+  }
+  &--title {
+    font-family: "Cairo", sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  &--dateLimitInscription {
+    font-family: "Cairo", sans-serif;
+    strong {
+      color: $primary;
+    }
+  }
+  &--docs {
+    ul {
+      li {
+        a {
+          font-family: "Cairo", sans-serif;
+          text-decoration: none;
+          color: $primary;
+          font-size: 1rem;
+          font-weight: bold;
+          &:hover {
+            text-decoration: underline;
+          }
         }
-       
+      }
     }
-    & > p{
-        color: $secondary;
-        text-align: center;
-        font-size: 1.1rem;
-        margin-bottom: 50px;
+  }
+  .pagination {
+    nav {
+      ul {
+        flex-direction: row-reverse !important;
+        font-family: "Cairo", sans-serif;
+      }
     }
-    & > a{
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: $primary;
-            &:hover{
-                color: $secondary;
-            }
-    }
-
-    .card{
-        height: 100%;
-        text-align: left;
-        .card-title{
-            padding: 10px;
-            a{
-                text-decoration: none;
-                color: #000;
-                &:hover{
-                    color: $primary!important;
-                }
-            }
-        }
-        .card-text{
-            padding: 0px 10px 5px 10px;
-        }
-    }
+  }
 }

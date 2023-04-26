@@ -83,9 +83,10 @@ class EtablissementCrudController extends AbstractCrudController
             yield DateTimeField::new('createdAt', 'Crée le');
             yield DateTimeField::new('updatedAt', 'Modifiée le');
             yield BooleanField::new('isActive', 'Etat')->setDisabled(!$this->isGranted("ROLE_SUPER_ADMIN"));
+            yield BooleanField::new('isEtranger', 'Si étranger')->setDisabled(!$this->isGranted("ROLE_ADMIN"));
             yield BooleanField::new('isPublic', 'Grand public')->setDisabled(!$this->isGranted("ROLE_ADMIN"));
         } else {
-            $typesBac = ['SM', 'SVT', 'PC'];
+            $typesBac = ['SM', 'SVT', 'SAgro', 'STM', 'STE', 'PC', 'Eco', 'Lettre'];
 
             yield FormField::addTab('Détails')->setIcon('info');
             yield TextField::new('name', 'Désignation')->setColumns(6);
@@ -94,7 +95,7 @@ class EtablissementCrudController extends AbstractCrudController
                 ->setChoices(array_combine($typesBac, $typesBac))
                 ->allowMultipleChoices()
                 ->setColumns(6);
-            yield IntegerField::new('dureeFormation', 'Durée formation (mois)')->setColumns(6);
+            yield IntegerField::new('dureeFormation', 'Durée formation (ans)')->setColumns(6);
             yield TextField::new('diplome', 'Diplome')->setColumns(6);
             yield TextField::new('modeAdmis', 'Mode admis')->setColumns(6);
             yield UrlField::new('video', 'Lien vidéo (youtube)')->setColumns(6);
@@ -125,8 +126,9 @@ class EtablissementCrudController extends AbstractCrudController
                 ->setColumns(6)
                 ->setRequired($pageName !== Crud::PAGE_EDIT);
 
-            yield BooleanField::new('isActive', 'Etat')->setColumns(6)->setPermission("ROLE_SUPER_ADMIN");
-            yield BooleanField::new('isPublic', 'Grand public')->setColumns(6)->setPermission("ROLE_ADMIN");
+            yield BooleanField::new('isActive', 'Etat')->setColumns(12)->setPermission("ROLE_SUPER_ADMIN");
+            yield BooleanField::new('isEtranger', 'Si étranger')->setColumns(12)->setPermission("ROLE_ADMIN");
+            yield BooleanField::new('isPublic', 'Grand public')->setColumns(12)->setPermission("ROLE_ADMIN");
 
             yield FormField::addTab('Seuils')->setIcon('check-square');
             yield NumberField::new('seuilSM', 'Seuil SM')->setColumns(6);

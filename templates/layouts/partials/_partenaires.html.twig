@@ -1,0 +1,18 @@
+<section id="clients" class="nos-partenaires">
+	<div class="container">
+		<div class="section-title" data-aos="fade-up">
+			<h2>partenaires</h2>
+			<p>Nos partenaires</p>
+		</div>
+		<div class="row gap-0 mb-4 clients-wrap" data-aos="fade-left">
+			{% for partenaire in partenaires %}
+				<div class="col-lg-3 col-md-4 p-0">
+					<a href="{{partenaire.link}}" class="client-logo" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="{{partenaire.name}}">
+						<img src="{{ asset('uploads/partenaires/' ~ partenaire.image ) }}" alt="{{partenaire.name}}" class="img-fluid">
+					</a>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+</section>

@@ -1,0 +1,54 @@
+{% if etablissement.news and etablissement.news.dateLimitInscription %}
+	<div class="modal fade modalInscription" id="modalInscription{{key}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="" style="background: url('{{ asset('uploads/etablissements/' ~ etablissement.logo) }}') center, #fff;width: 50px;
+																																																																																																																	height: 50px;
+																																																																																																																	background-repeat: no-repeat !important;
+																																																																																																																	background-size: contain !important;
+																																																																																																																	background-position: center !important;
+																																																																																																																	border: 2px solid #ddd;
+																																																																																																																	border-radius: 50%;
+																																																																																																																	margin-right:10px"></div>
+					<h5 class="modal-title" id="exampleModalLabel">
+						<strong>{{' ' ~ etablissement.sigle}}:
+						</strong>L'inscription et ouverte jusqu'à le
+
+						<strong>{{ etablissement.news.dateLimitInscription | date('d/m/Y')}}</strong>
+
+
+					</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<table class="table table-striped" dir="rtl">
+						<tbody>
+							<tr>
+								<td class="text-end text-arabic">{{etablissement.news.title}}</td>
+								<td>
+									<ul>
+										{% for doc in etablissement.news.docNews %}
+											<li>
+												{% if doc.link %}
+													<a href="{{doc.link}}" class="text-arabic" target="_blank">{{doc.title}}</a>
+												{% endif %}
+												{% if doc.file %}
+													<a href="{{ asset('uploads/news_docs/' ~ doc.file)}}" class="text-arabic" download>{{doc.title}}</a>
+												{% endif %}
+											</li>
+										{% endfor %}
+									</ul>
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endif %}

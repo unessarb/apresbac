@@ -27,7 +27,7 @@ class Etablissement
 {
     use Timestampable;
 
-    public const NUM_ITEMS_PER_PAGE = 12;
+    public const NUM_ITEMS_PER_PAGE = 16;
 
     /**
      * @ORM\Id
@@ -85,46 +85,46 @@ class Etablissement
     private $isActive;
 
     /**
-     * @ORM\Column(type="decimal")
-     * @Assert\Positive
+     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @Assert\PositiveOrZero
      */
-    private $seuilSM;
+    private $seuilSM = 0;
 
     /**
-     * @ORM\Column(type="decimal")
-     * @Assert\Positive
+     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @Assert\PositiveOrZero
      */
-    private $seuilSP;
+    private $seuilSP = 0;
 
     /**
-     * @ORM\Column(type="decimal")
-     * @Assert\Positive
+     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @Assert\PositiveOrZero
      */
-    private $seuilSVT;
+    private $seuilSVT = 0;
 
     /**
-     * @ORM\Column(type="decimal")
-     * @Assert\Positive
+     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @Assert\PositiveOrZero
      */
-    private $seuilSAgro;
+    private $seuilSAgro = 0;
 
     /**
-     * @ORM\Column(type="decimal")
-     * @Assert\Positive
+     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @Assert\PositiveOrZero
      */
-    private $seuilEco;
+    private $seuilEco = 0;
 
     /**
-     * @ORM\Column(type="decimal")
-     * @Assert\Positive
+     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @Assert\PositiveOrZero
      */
-    private $seuilSTM;
+    private $seuilSTM = 0;
 
     /**
-     * @ORM\Column(type="decimal")
-     * @Assert\Positive
+     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @Assert\PositiveOrZero
      */
-    private $seuilSTE;
+    private $seuilSTE = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"default": "true"})
@@ -208,6 +208,11 @@ class Etablissement
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $news;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": "false"})
+     */
+    private $isEtranger = false;
 
 
     public function __construct()
@@ -664,6 +669,18 @@ class Etablissement
     public function setNews(?News $news): self
     {
         $this->news = $news;
+
+        return $this;
+    }
+
+    public function isIsEtranger(): ?bool
+    {
+        return $this->isEtranger;
+    }
+
+    public function setIsEtranger(bool $isEtranger): self
+    {
+        $this->isEtranger = $isEtranger;
 
         return $this;
     }

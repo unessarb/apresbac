@@ -15,21 +15,29 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Security;
 
 class EasyAdminSubscriber implements EventSubscriberInterface
 {
     private $userPasswordHasherInterface;
     private $em;
     private $etablissementRepository;
+    /**
+     * @var Security
+     */
+    private $security;
+
 
     public function __construct(
         UserPasswordHasherInterface $userPasswordHasherInterface,
         EntityManagerInterface $em,
-        EtablissementRepository $etablissementRepository
+        EtablissementRepository $etablissementRepository,
+        Security $security
     ) {
         $this->userPasswordHasherInterface = $userPasswordHasherInterface;
         $this->em = $em;
         $this->etablissementRepository = $etablissementRepository;
+        $this->security = $security;
     }
 
     public function onKernelRequest(RequestEvent $event): void
@@ -43,12 +51,14 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     {
         $this->updateUserPassword($event);
         $this->putTagsAndSecteursForSearchEtablissement($event);
+        $this->setNewsPublishedAndUpdatedBy($event);
     }
 
     public function beforeEntityUpdatedEvent(BeforeEntityUpdatedEvent $event): void
     {
         $this->updateUserPassword($event);
         $this->putTagsAndSecteursForSearchEtablissement($event);
+        $this->setNewsPublishedAndUpdatedBy($event);
     }
 
     public function afterEntityPersistedEvent(AfterEntityPersistedEvent $event)
@@ -90,6 +100,10 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         if ($entityInstance instanceof News && $entityInstance->getEtablissement() && $entityInstance->getDateLimitInscription()) {
             $old_etablissement = $this->etablissementRepository->findOneByNews($entityInstance->getId());
             $new_etablissement = $entityInstance->getEtablissement();
+
+            if (!$old_etablissement || !$new_etablissement) {
+                return;
+            }
 
             if ($old_etablissement->getId() !== $new_etablissement->getId()) {
                 $old_etablissement->setNews(null);
@@ -134,6 +148,18 @@ class EasyAdminSubscriber implements EventSubscriberInterface
                 }
                 $entityInstance->setVillesText($villesText);
             }
+        }
+    }
+
+    public function setNewsPublishedAndUpdatedBy($event)
+    {
+        $entityInstance = $event->getEntityInstance();
+
+        if ($entityInstance instanceof News) {
+            $user = $this->security->getUser();
+            if (!$entityInstance->getId())
+                $entityInstance->setPublishedBy($user);
+            $entityInstance->setUpdatedBy($user);
         }
     }
 

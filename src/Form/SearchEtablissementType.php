@@ -16,7 +16,7 @@ class SearchEtablissementType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'class' => 'search-input',
-                    'placeholder' => 'Entrez un ou plusieurs mots-clés'
+                    'placeholder' => 'Rechercher'
                 ]
             ]);
     }

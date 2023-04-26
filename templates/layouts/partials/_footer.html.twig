@@ -1,61 +1,5 @@
-<footer class="footer-section">
-	<div class="container">
-		<div class="footer-content pt-5 pb-5">
-			<div class="row">
-				<div class="col-xl-4 col-lg-4 mb-50">
-					<div class="footer-widget">
-						<div class="footer-logo">
-							<a href="{{path('app_home')}}"><img src="{{ asset('uploads/images/apresbac.png') }}" class="img-fluid" alt="logo"></a>
-						</div>
-						<div class="footer-text">
-							<p>Votre guide pour une orientation réussie au Maroc.
-								<br>Notre rôle est de fournir des informations et des conseils pour aider les étudiants à réussir leur transition vers l'université.</p>
-						</div>
-						<div class="footer-social-icon mb-4 mb-lg-0">
-							<span>Suivez-nous</span>
-							<a href="https://www.facebook.com/profile.php?id=100089997335436" target="_blank">
-								<i class="fab fa-facebook-f facebook-bg"></i>
-							</a>
-							<a href="https://www.instagram.com/apresbacdotcom/" target="_blank">
-								<i class="fab fa-instagram instagram-bg"></i>
-							</a>
-							<a href="https://www.youtube.com/@apresbac7909" target="_blank">
-								<i class="fab fa-youtube youtube-bg"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-4 col-lg-4 col-md-6 mb-30">
-					<div class="footer-widget">
-						<div class="footer-widget-heading">
-							<h3>Liens utiles</h3>
-						</div>
-						<ul>
-							{{ render(controller('App\\Controller\\HomeController::liensUtiles')) }}
-						</ul>
-					</div>
-				</div>
-				<div class="col-xl-4 col-lg-4 col-md-6 mb-50">
-					<div class="footer-widget">
-						<div class="footer-widget-heading">
-							<h3>S'abonner à</h3>
-						</div>
-						<div class="footer-text mb-25">
-							<p>Ne manquez pas de vous abonner à nos nouveaux flux, en remplissant le formulaire ci-dessous.</p>
-						</div>
-						<div class="subscribe-form">
-							<form action="#">
-								<input type="text" placeholder="Adresse électronique">
-								<button>
-									<i class="fab fa-telegram-plane"></i>
-								</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+{{ render(controller('App\\Controller\\HomeController::partenaires')) }}
+<footer class="footer-section mt-4">
 	<div class="copyright-area">
 		<div class="container">
 			<div class="row">
@@ -72,6 +16,8 @@
 						<ul>
 							<li><a href="/" id="">Accueil</a></li>
 							<li><a class=""href="{{ path('app_news') }}">Actualités</a></li>
+							<li><a class=""href="{{ path('app_etablissement') }}">Etablissments</a></li>
+							<li><a class=""href="{{ path('app_etablissement_etudier_etranger') }}">Etudier à l'étranger</a></li>
 							<li><a class=""href="{{ path('app_contact') }}">Contact</a></li>
 						</ul>
 					</div>

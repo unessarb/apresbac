@@ -3,28 +3,13 @@
   
   /* Carousel base class */
   .carousel {
-    margin-bottom: 3rem;
-    & .my_btn{
-      border-color: $primary;
-      background-color: $primary;
-      color: white;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-size: smaller;
-      &:hover{
-        background-color: #d25b39;
-      }
-    }
+    max-height: 90px;
+    max-width: 720px;
   }
-  /* Since positioning the image, we need to help out the caption */
-  .carousel-caption {
-    bottom: 3rem;
-    z-index: 10;
-  }
-  
   /* Declare heights because of positioning of img element */
   .carousel-item {
-    height: 32rem;
+    height: 90px;
+    width: 720px;
   }
   
   

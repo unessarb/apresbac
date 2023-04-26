@@ -29,14 +29,4 @@ class NewsController extends AbstractController
 
         return $this->render('news/index.html.twig', compact('pagination'));
     }
-
-    /**
-     * @Route("/news/{slug}", name="app_news_show", methods="GET")
-     */
-    public function show(Request $request, News $news, NewsRepository $newsRepository): Response
-    {
-        $otherNews = $newsRepository->getOtherNews($news);
-
-        return $this->render('news/show.html.twig', compact('news', 'otherNews'));
-    }
 }

@@ -1,0 +1,75 @@
+<div class="modal fade" id="modalDetails{{key}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="" style="background: url('{{ asset('uploads/etablissements/' ~ etablissement.logo) }}') center, #fff;width: 50px;
+																				height: 50px;
+																				background-repeat: no-repeat !important;
+																				background-size: contain !important;
+																				background-position: center !important;
+																				border: 2px solid #ddd;
+																				border-radius: 50%;
+																				margin-right:10px"></div>
+				<h5 class="modal-title" id="exampleModalLabel">
+					<strong>{{' ' ~ etablissement.sigle}}:
+					</strong>Plus d'informations
+
+				</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<table class="table table-striped">
+					<tbody>
+						{% set villes = [] %}
+						{% for ville in etablissement.villes %}
+							{% set villes = villes|merge([ville]) %}
+						{% endfor %}
+						{% if villes %}
+
+							<tr>
+								<td>Villes</td>
+								<td>
+									<span data-bs-toggle="tooltip" data-bs-placement="top" title="{{villes | join(', ')}}">
+										{{ villes | join(', ') | u.truncate(60, ', et plus...') }}
+									</span>
+								</td>
+							</tr>
+						{% endif %}
+
+						<tr>
+							<td>Durée de la formation</td>
+							<td>
+								{{etablissement.dureeFormation ? etablissement.dureeFormation ~ ' An(s)' : ''}}
+							</td>
+						</tr>
+
+						{% if etablissement.typeBac %}
+							<tr>
+								<td>Type bac</td>
+								<td>
+									<span data-bs-toggle="tooltip" data-bs-placement="top" title="{{etablissement.typeBac | join(', ')}}">
+										{{ etablissement.typeBac | join(', ') | u.truncate(38, ', et plus...') }}
+									</span>
+								</td>
+							</tr>
+						{% endif %}
+
+						{% if etablissement.diplome %}
+							<tr>
+								<td>Diplôme</td>
+								<td>
+									<span data-bs-toggle="tooltip" data-bs-placement="top" title="{{etablissement.diplome}}">
+										{{ etablissement.diplome | u.truncate(40, '...') }}
+									</span>
+								</td>
+							</tr>
+						{% endif %}
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>

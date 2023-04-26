@@ -1,152 +1,160 @@
-body{
+body {
   margin: 0;
   padding: 0;
   height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
-  main{
+  font-family: "Open Sans", sans-serif;
+  color: #444444;
+  main {
     flex-grow: 1;
+  }
+}
+
+.text-arabic {
+  font-family: "Cairo", sans-serif;
+}
+.modalInscription {
+  td.text-arabic {
+    font-size: 1.5rem;
+  }
+  a.text-arabic {
+    font-size: 1.2rem;
   }
 }
 
 // Mixin for shadow button with block sliding up
 @mixin btn-border-slide($color, $hoverColor, $borderWidth, $time) {
-    $easing: cubic-bezier(0.4, 0, 0.2, 1);
-    
-    position: relative;
-  
-    display: inline-block;
-    padding: 0.5em 2em;
-  
-    cursor: pointer;
-    overflow: hidden;
-  
-    &:before,
-    &:after {
-      content: "";
-      position: absolute;
-      left: 0;
-  
-      height: $borderWidth;
-      width: 100%;
-  
-      background-color: $color;
-    }
-  
-    &:before {
-      top: 0;
-    }
-  
-    &:after {
-      bottom: 0;
-    }
-  
-    &:hover {
-  
+  $easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  position: relative;
+
+  display: inline-block;
+  padding: 0.5em 2em;
+
+  cursor: pointer;
+  overflow: hidden;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    left: 0;
+
+    height: $borderWidth;
+    width: 100%;
+
+    background-color: $color;
+  }
+
+  &:before {
+    top: 0;
+  }
+
+  &:after {
+    bottom: 0;
+  }
+
+  &:hover {
+    & > * {
       & > * {
-  
+        &:before,
+        &:after {
+          transform: translate3d(0, 0, 0);
+        }
+
         & > * {
-  
           &:before,
           &:after {
             transform: translate3d(0, 0, 0);
-          }
-  
-          & > * {
-            &:before,
-            &:after {
-              transform: translate3d(0, 0, 0);
-            }
-          }
-        }
-      }
-    }
-  
-    & > * {
-  
-      &:before,
-      &:after {
-        content: "";
-        position: absolute;
-        top: 0;
-  
-        height: 100%;
-        width: $borderWidth;
-  
-        background-color: $color;
-      }
-  
-      &:before {
-        left: 0;
-      }
-  
-      &:after {
-        right: 0;
-      }
-  
-      & > * {
-  
-        &:before,
-        &:after {
-          content: "";
-          position: absolute;
-          left: 0;
-          z-index: 9;
-  
-          height: $borderWidth;
-          width: 100%;
-  
-          background-color: $hoverColor;
-        }
-  
-        &:before {
-          top: 0;
-  
-          transform: translate3d(-105%, 0, 0);
-          transition: transform $time $easing;
-        }
-  
-        &:after {
-          bottom: 0;
-          
-          transform: translate3d(105%, 0, 0);
-          transition: transform $time $easing;
-        }
-  
-        & > * {
-  
-          &:before,
-          &:after {
-            content: "";
-            position: absolute;
-            top: 0;
-            z-index: 9;
-  
-            height: 100%;
-            width: $borderWidth;
-  
-            background-color: $hoverColor;
-          }
-  
-          &:before {
-            left: 0;
-  
-            transform: translate3d(0, 105%, 0);
-            transition: transform $time $easing;
-          }
-  
-          &:after {
-            right: 0;
-  
-            transform: translate3d(0, -105%, 0);
-            transition: transform $time $easing;
           }
         }
       }
     }
   }
-  
-.myBtn{
-    @include btn-border-slide($primary,$secondary, 2px, 0.8s);
+
+  & > * {
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+
+      height: 100%;
+      width: $borderWidth;
+
+      background-color: $color;
+    }
+
+    &:before {
+      left: 0;
+    }
+
+    &:after {
+      right: 0;
+    }
+
+    & > * {
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        z-index: 9;
+
+        height: $borderWidth;
+        width: 100%;
+
+        background-color: $hoverColor;
+      }
+
+      &:before {
+        top: 0;
+
+        transform: translate3d(-105%, 0, 0);
+        transition: transform $time $easing;
+      }
+
+      &:after {
+        bottom: 0;
+
+        transform: translate3d(105%, 0, 0);
+        transition: transform $time $easing;
+      }
+
+      & > * {
+        &:before,
+        &:after {
+          content: "";
+          position: absolute;
+          top: 0;
+          z-index: 9;
+
+          height: 100%;
+          width: $borderWidth;
+
+          background-color: $hoverColor;
+        }
+
+        &:before {
+          left: 0;
+
+          transform: translate3d(0, 105%, 0);
+          transition: transform $time $easing;
+        }
+
+        &:after {
+          right: 0;
+
+          transform: translate3d(0, -105%, 0);
+          transition: transform $time $easing;
+        }
+      }
+    }
+  }
+}
+
+.myBtn {
+  @include btn-border-slide($primary, $secondary, 2px, 0.8s);
 }

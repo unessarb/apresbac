@@ -15,6 +15,10 @@ import './bootstrap';
 
 const $ = require('jquery');
 
+import AOS from 'aos';
+// ..
+AOS.init();
+
 // create global $ and jQuery variables
 global.$ = global.jQuery = $;
 

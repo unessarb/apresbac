@@ -1,0 +1,76 @@
+<div class="modal fade" id="modalSeuil{{key}}" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Les seuils de l'établissement
+					<strong>{{etablissement.sigle}}</strong>
+				</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Branche</th>
+							<th scope="col">Seuil</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% if etablissement.seuilSM != 0 %}
+							<tr>
+								<td>Sciences mathématiques</td>
+								<td>{{ etablissement.seuilSM }}</td>
+							</tr>
+						{% endif %}
+
+						{% if etablissement.seuilSP != 0 %}
+							<tr>
+								<td>Sciences Physiques</td>
+								<td>{{ etablissement.seuilSP }}</td>
+							</tr>
+						{% endif %}
+
+						{% if etablissement.seuilSVT != 0 %}
+							<tr>
+								<td>Sciences de la Vie et de la Terre</td>
+								<td>{{ etablissement.seuilSVT }}</td>
+							</tr>
+						{% endif %}
+
+						{% if etablissement.seuilSAgro != 0 %}
+							<tr>
+								<td>Sciences agronomiques</td>
+								<td>{{ etablissement.seuilSAgro }}</td>
+							</tr>
+						{% endif %}
+
+						{% if etablissement.seuilEco != 0 %}
+							<tr>
+								<td>Sciences économiques</td>
+								<td>{{ etablissement.seuilEco }}</td>
+							</tr>
+						{% endif %}
+
+						{% if etablissement.seuilSTM != 0 %}
+							<tr>
+								<td>Sciences et Technologies Mécaniques</td>
+								<td>{{ etablissement.seuilSTM }}</td>
+							</tr>
+						{% endif %}
+
+						{% if etablissement.seuilSTE != 0 %}
+							<tr>
+								<td>Sciences et Technologies Electriques</td>
+								<td>{{ etablissement.seuilSTE }}</td>
+							</tr>
+						{% endif %}
+
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>

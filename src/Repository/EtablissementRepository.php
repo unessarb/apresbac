@@ -62,13 +62,15 @@ class EtablissementRepository extends ServiceEntityRepository
     /**
      * @return Etablissement[] Returns an array of Etablissement objects
      */
-    public function createAllEtablissementQuery(): Query
+    public function createAllEtablissementQuery($isEtranger = false): Query
     {
         $queryBuilder = $this->createQueryBuilder('e')
             ->andWhere('e.isPublic = :isPublic')
             ->andWhere('e.isActive = :isActive')
+            ->andWhere('e.isEtranger = :isEtranger')
             ->setParameter('isPublic', true)
             ->setParameter('isActive', true)
+            ->setParameter('isEtranger', $isEtranger)
             ->orderBy('e.name', 'ASC');
 
 
@@ -78,15 +80,17 @@ class EtablissementRepository extends ServiceEntityRepository
     /**
      * @return Etablissement[] Returns an array of Etablissement objects
      */
-    public function createSearchEtablissementQuery($mots): Query
+    public function createSearchEtablissementQuery($mots, $isEtranger = false): Query
     {
         $queryBuilder = $this->createQueryBuilder('e')
             ->andWhere('MATCH_AGAINST(e.name, e.sigle, e.tagsText, e.secteursText, e.villesText) AGAINST (:mots boolean)>0')
             ->andWhere('e.isPublic = :isPublic')
             ->andWhere('e.isActive = :isActive')
+            ->andWhere('e.isEtranger = :isEtranger')
             ->setParameter('mots', $mots)
             ->setParameter('isPublic', true)
             ->setParameter('isActive', true)
+            ->setParameter('isEtranger', $isEtranger)
             ->orderBy('e.name', 'ASC');
 
 

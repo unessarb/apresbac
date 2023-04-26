@@ -22,6 +22,9 @@ class ParceUrlExtension extends AbstractExtension
     {
         if (!$value) return $value;
         parse_str(parse_url($value, PHP_URL_QUERY), $my_array_of_vars);
-        return $my_array_of_vars['v'];
+        if (!array_key_exists('v', $my_array_of_vars)) {
+            return null;
+        }
+        return array_key_exists('v', $my_array_of_vars) ? $my_array_of_vars['v'] : null;
     }
 }

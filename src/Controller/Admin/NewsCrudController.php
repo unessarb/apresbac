@@ -19,6 +19,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Image;
@@ -51,19 +52,19 @@ class NewsCrudController extends AbstractCrudController
             ->setPageTitle('index', 'Gestion des actualités')
             ->setEntityLabelInSingular('Actualité')
             ->setEntityLabelInPlural('Actualités')
-            ->setSearchFields(['title', 'content', 'etablissement.name']);
+            ->setSearchFields(['title', 'publishedBy.name', 'updatedBy.name', 'etablissement.name']);
     }
 
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
             ->add(TextFilter::new('title', 'Désignation'))
+            ->add('etablissement')
+            ->add(EntityFilter::new('publishedBy', 'Publiée par'))
+            ->add(EntityFilter::new('updatedBy', 'Modifée par'))
             ->add(DateTimeFilter::new('createdAt', 'Crée le'))
             ->add(DateTimeFilter::new('updatedAt', 'Modifiée le'))
-            ->add(DateTimeFilter::new('publishedAt', 'Publiée le'))
-            ->add('etablissement')
-            ->add(BooleanFilter::new('isActive', 'Etat'))
-            ->add(BooleanFilter::new('isPublic', 'Grand public'));
+            ->add(BooleanFilter::new('isActive', 'Etat'));
     }
 
     public function configureFields(string $pageName): iterable
@@ -72,13 +73,12 @@ class NewsCrudController extends AbstractCrudController
             yield IdField::new('id');
             yield ImageField::new('image', 'Image')->setBasePath('uploads/news/');
             yield TextField::new('title', 'Désignation');
-            yield TextEditorField::new('content', 'Contenu');
             yield TextField::new('etablissement');
+            yield TextField::new('publishedBy', 'Publiée par');
+            yield TextField::new('updatedBy', 'Modifiée par');
             yield DateTimeField::new('createdAt', 'Crée le')->setFormat("yyyy-MM-dd 'à' HH:mm:ss");
             yield DateTimeField::new('updatedAt', 'Modifiée le')->setFormat("yyyy-MM-dd 'à' HH:mm:ss");
-            yield DateTimeField::new('publishedAt', 'Publiée le')->setFormat("yyyy-MM-dd 'à' HH:mm:ss");
             yield BooleanField::new('isActive', 'Etat')->setDisabled(!$this->isGranted("ROLE_SUPER_ADMIN"));
-            yield BooleanField::new('isPublic', 'Grand public')->setDisabled(!$this->isGranted("ROLE_ADMIN"));
         } else {
             yield TextField::new('title', 'Désignation')->setColumns(6);
             yield AssociationField::new('etablissement')
@@ -89,17 +89,14 @@ class NewsCrudController extends AbstractCrudController
                 ->setColumns(6);
             yield DateTimeField::new('dateLimitInscription', 'Date limite inscription')->setColumns('col-md-6 offset-md-6')
                 ->addCssClass('date_limite_inscription d-none')->addWebpackEncoreEntries('admin');
-            yield TextEditorField::new('content', 'Contenu')->setColumns(12);
             yield ImageField::new('image', 'Image')
                 ->setBasePath('uploads/news/')
                 ->setUploadDir('public/uploads/news')
                 ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]')
                 ->setColumns(6)
-                ->setRequired($pageName !== Crud::PAGE_EDIT);
+                ->setRequired(false);
 
-            yield DateTimeField::new('publishedAt', 'Publiée le')->setColumns(12);
             yield BooleanField::new('isActive', 'Etat')->setColumns(12)->setPermission("ROLE_SUPER_ADMIN");
-            yield BooleanField::new('isPublic', 'Grand public')->setColumns(12)->setPermission("ROLE_ADMIN");
         }
     }
 }
