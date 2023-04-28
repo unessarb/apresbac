@@ -86,8 +86,7 @@ class EtablissementCrudController extends AbstractCrudController
             yield BooleanField::new('isEtranger', 'Si étranger')->setDisabled(!$this->isGranted("ROLE_ADMIN"));
             yield BooleanField::new('isPublic', 'Grand public')->setDisabled(!$this->isGranted("ROLE_ADMIN"));
         } else {
-            $typesBac = ['SM', 'SVT', 'SAgro', 'STM', 'STE', 'PC', 'Eco', 'Lettre'];
-
+            $typesBac = ['SM', 'PC', 'SVT', 'SAgro', 'SEco', 'SGC', 'STM', 'STE', 'LSH', 'Chariâa', 'Toutes options'];
             yield FormField::addTab('Détails')->setIcon('info');
             yield TextField::new('name', 'Désignation')->setColumns(6);
             yield TextField::new('sigle', 'Sigle')->setColumns(6);
@@ -131,13 +130,16 @@ class EtablissementCrudController extends AbstractCrudController
             yield BooleanField::new('isPublic', 'Grand public')->setColumns(12)->setPermission("ROLE_ADMIN");
 
             yield FormField::addTab('Seuils')->setIcon('check-square');
-            yield NumberField::new('seuilSM', 'Seuil SM')->setColumns(6);
-            yield NumberField::new('seuilSP', 'Seuil SP')->setColumns(6);
-            yield NumberField::new('seuilSVT', 'Seuil SVT')->setColumns(6);
-            yield NumberField::new('seuilSAgro', 'Seuil SAgro')->setColumns(6);
-            yield NumberField::new('seuilEco', 'Seuil Eco')->setColumns(6);
-            yield NumberField::new('seuilSTM', 'Seuil STM')->setColumns(6);
-            yield NumberField::new('seuilSTE', 'Seuil STE')->setColumns(6);
+            yield NumberField::new('seuilSM', 'Seuil SM')->setColumns(6)->setNumDecimals(2);
+            yield NumberField::new('seuilSP', 'Seuil SPC')->setColumns(6)->setNumDecimals(2);
+            yield NumberField::new('seuilSVT', 'Seuil SVT')->setColumns(6)->setNumDecimals(2);
+            yield NumberField::new('seuilSAgro', 'Seuil SAgro')->setColumns(6)->setNumDecimals(2);
+            yield NumberField::new('seuilEco', 'Seuil SEco')->setColumns(6)->setNumDecimals(2);
+            yield NumberField::new('seuilSGC', 'Seuil SGC')->setColumns(6)->setNumDecimals(2);
+            yield NumberField::new('seuilSTM', 'Seuil STM')->setColumns(6)->setNumDecimals(2);
+            yield NumberField::new('seuilSTE', 'Seuil STE')->setColumns(6)->setNumDecimals(2);
+            yield NumberField::new('seuilLSH', 'Seuil LSH(Lettre)')->setColumns(6)->setNumDecimals(2);
+            yield NumberField::new('seuilChariaa', 'Seuil Chariâa')->setColumns(6)->setNumDecimals(2);
 
             yield FormField::addTab('Contact information')->setIcon('phone');
             yield TextField::new('adresse', 'Adresse')->setColumns(6);

@@ -3,7 +3,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">Les seuils de l'établissement
-					<strong>{{etablissement.sigle}}</strong>
+					<strong class="text-uppercase">{{etablissement.sigle}}</strong>
 				</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
@@ -19,49 +19,70 @@
 						{% if etablissement.seuilSM != 0 %}
 							<tr>
 								<td>Sciences mathématiques</td>
-								<td>{{ etablissement.seuilSM }}</td>
+								<td>{{ etablissement.seuilSM |number_format(2, ',') }}</td>
 							</tr>
 						{% endif %}
 
 						{% if etablissement.seuilSP != 0 %}
 							<tr>
 								<td>Sciences Physiques</td>
-								<td>{{ etablissement.seuilSP }}</td>
+								<td>{{ etablissement.seuilSP |number_format(2, ',') }}</td>
 							</tr>
 						{% endif %}
 
 						{% if etablissement.seuilSVT != 0 %}
 							<tr>
 								<td>Sciences de la Vie et de la Terre</td>
-								<td>{{ etablissement.seuilSVT }}</td>
+								<td>{{ etablissement.seuilSVT |number_format(2, ',') }}</td>
 							</tr>
 						{% endif %}
 
 						{% if etablissement.seuilSAgro != 0 %}
 							<tr>
 								<td>Sciences agronomiques</td>
-								<td>{{ etablissement.seuilSAgro }}</td>
+								<td>{{ etablissement.seuilSAgro |number_format(2, ',') }}</td>
 							</tr>
 						{% endif %}
 
 						{% if etablissement.seuilEco != 0 %}
 							<tr>
 								<td>Sciences économiques</td>
-								<td>{{ etablissement.seuilEco }}</td>
+								<td>{{ etablissement.seuilEco |number_format(2, ',') }}</td>
+							</tr>
+						{% endif %}
+
+						{% if etablissement.seuilSGC != 0 %}
+							<tr>
+								<td>Sciences de Gestion Comptable</td>
+								<td>{{ etablissement.seuilSGC |number_format(2, ',') }}</td>
 							</tr>
 						{% endif %}
 
 						{% if etablissement.seuilSTM != 0 %}
 							<tr>
 								<td>Sciences et Technologies Mécaniques</td>
-								<td>{{ etablissement.seuilSTM }}</td>
+								<td>{{ etablissement.seuilSTM |number_format(2, ',') }}</td>
 							</tr>
 						{% endif %}
 
 						{% if etablissement.seuilSTE != 0 %}
 							<tr>
 								<td>Sciences et Technologies Electriques</td>
-								<td>{{ etablissement.seuilSTE }}</td>
+								<td>{{ etablissement.seuilSTE |number_format(2, ',') }}</td>
+							</tr>
+						{% endif %}
+
+						{% if etablissement.seuilLSH != 0 %}
+							<tr>
+								<td>LSH (Lettre)</td>
+								<td>{{ etablissement.seuilLSH |number_format(2, ',') }}</td>
+							</tr>
+						{% endif %}
+
+						{% if etablissement.seuilChariaa != 0 %}
+							<tr>
+								<td>Chariâa</td>
+								<td>{{ etablissement.seuilChariaa |number_format(2, ',') }}</td>
 							</tr>
 						{% endif %}
 

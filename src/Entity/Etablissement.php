@@ -85,46 +85,64 @@ class Etablissement
     private $isActive;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @ORM\Column(type="decimal", nullable=true, precision=12, scale=2, options={"default":0})
      * @Assert\PositiveOrZero
      */
     private $seuilSM = 0;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @ORM\Column(type="decimal", nullable=true, precision=12, scale=2, options={"default":0})
      * @Assert\PositiveOrZero
      */
     private $seuilSP = 0;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @ORM\Column(type="decimal", nullable=true, precision=12, scale=2, options={"default":0})
      * @Assert\PositiveOrZero
      */
     private $seuilSVT = 0;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @ORM\Column(type="decimal", nullable=true, precision=12, scale=2, options={"default":0})
      * @Assert\PositiveOrZero
      */
     private $seuilSAgro = 0;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @ORM\Column(type="decimal", nullable=true, precision=12, scale=2, options={"default":0})
      * @Assert\PositiveOrZero
      */
     private $seuilEco = 0;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @ORM\Column(type="decimal", nullable=true, precision=12, scale=2, options={"default":0})
+     * @Assert\PositiveOrZero
+     */
+    private $seuilSGC = 0;
+
+    /**
+     * @ORM\Column(type="decimal", nullable=true, precision=12, scale=2, options={"default":0})
      * @Assert\PositiveOrZero
      */
     private $seuilSTM = 0;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, options={"default": "0"})
+     * @ORM\Column(type="decimal", nullable=true, precision=12, scale=2, options={"default":0})
      * @Assert\PositiveOrZero
      */
     private $seuilSTE = 0;
+
+    /**
+     * @ORM\Column(type="decimal", nullable=true, precision=12, scale=2, options={"default":0})
+     * @Assert\PositiveOrZero
+     */
+    private $seuilLSH = 0;
+
+    /**
+     * @ORM\Column(type="decimal", nullable=true, precision=12, scale=2, options={"default": "0"})
+     * @Assert\PositiveOrZero
+     */
+    private $seuilChariaa = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"default": "true"})
@@ -398,6 +416,19 @@ class Etablissement
         return $this;
     }
 
+    public function getSeuilSGC(): ?float
+    {
+        return $this->seuilSGC;
+    }
+
+    public function setSeuilSGC(float $seuilSGC): self
+    {
+        $this->seuilSGC = $seuilSGC;
+
+        return $this;
+    }
+
+
     public function getSeuilSTM(): ?float
     {
         return $this->seuilSTM;
@@ -418,6 +449,30 @@ class Etablissement
     public function setSeuilSTE(float $seuilSTE): self
     {
         $this->seuilSTE = $seuilSTE;
+
+        return $this;
+    }
+
+    public function getSeuilLSH(): ?float
+    {
+        return $this->seuilLSH;
+    }
+
+    public function setSeuilLSH(float $seuilLSH): self
+    {
+        $this->seuilLSH = $seuilLSH;
+
+        return $this;
+    }
+
+    public function getSeuilChariaa(): ?float
+    {
+        return $this->seuilChariaa;
+    }
+
+    public function setSeuilChariaa(float $seuilChariaa): self
+    {
+        $this->seuilChariaa = $seuilChariaa;
 
         return $this;
     }

@@ -11,7 +11,7 @@
 																				border-radius: 50%;
 																				margin-right:10px"></div>
 				<h5 class="modal-title" id="exampleModalLabel">
-					<strong>{{' ' ~ etablissement.sigle}}:
+					<strong class="text-uppercase">{{' ' ~ etablissement.sigle}}:
 					</strong>Plus d'informations
 
 				</h5>
@@ -20,6 +20,11 @@
 			<div class="modal-body">
 				<table class="table table-striped">
 					<tbody>
+						<tr>
+							<td colspan="2">
+								<strong>{{etablissement.name}}</strong>
+							</td>
+						</tr>
 						{% set villes = [] %}
 						{% for ville in etablissement.villes %}
 							{% set villes = villes|merge([ville]) %}
@@ -30,12 +35,11 @@
 								<td>Villes</td>
 								<td>
 									<span data-bs-toggle="tooltip" data-bs-placement="top" title="{{villes | join(', ')}}">
-										{{ villes | join(', ') | u.truncate(60, ', et plus...') }}
+										{{ villes | join(', ')  }}
 									</span>
 								</td>
 							</tr>
 						{% endif %}
-
 						<tr>
 							<td>Durée de la formation</td>
 							<td>
@@ -48,7 +52,7 @@
 								<td>Type bac</td>
 								<td>
 									<span data-bs-toggle="tooltip" data-bs-placement="top" title="{{etablissement.typeBac | join(', ')}}">
-										{{ etablissement.typeBac | join(', ') | u.truncate(38, ', et plus...') }}
+										{{ etablissement.typeBac | join(', ')  }}
 									</span>
 								</td>
 							</tr>
@@ -59,7 +63,7 @@
 								<td>Diplôme</td>
 								<td>
 									<span data-bs-toggle="tooltip" data-bs-placement="top" title="{{etablissement.diplome}}">
-										{{ etablissement.diplome | u.truncate(40, '...') }}
+										{{ etablissement.diplome  }}
 									</span>
 								</td>
 							</tr>

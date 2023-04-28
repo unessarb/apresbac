@@ -23,7 +23,7 @@
 							<img src="https://img.youtube.com/vi/{{idUrl}}/hqdefault.jpg" class="card-img-top" alt="{{etablissement.name}}">
 							<h2 class="card-title p-2 flex-grow-1 d-flex align-items-center">
 								<span>
-									{{etablissement.sigle}}
+									<span class="text-uppercase">{{etablissement.sigle}}</span>
 									-
 									<span data-bs-toggle="tooltip" data-bs-placement="top" title="{{etablissement.name}}">{{etablissement.name | u.truncate(28, '...')}}</span>
 								</span>
@@ -33,9 +33,16 @@
 								<a href="javascript:void(0)" class="card-details" data-bs-toggle="modal" data-bs-target="#modalDetails{{key}}">
 									<i class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Plus d'infos"></i>
 								</a>
-								<a href="javascript:void(0)" class="card-seuil" data-bs-toggle="modal" data-bs-target="#modalSeuil{{key}}">
-									<i class="fa-solid fa-list-check" data-bs-toggle="tooltip" data-bs-placement="top" title="Seuils"></i>
-								</a>
+
+								{% set seuils = etablissement.seuilSM + etablissement.seuilSP + etablissement.seuilSVT + etablissement.seuilSAgro + etablissement.seuilEco
+												+ etablissement.seuilSGC + etablissement.seuilSTM + etablissement.seuilSTE + etablissement.seuilLSH + etablissement.seuilChariaa
+								%}
+								{% if seuils > 0 %}
+									<a href="javascript:void(0)" class="card-seuil" data-bs-toggle="modal" data-bs-target="#modalSeuil{{key}}">
+										<i class="fa-solid fa-list-check" data-bs-toggle="tooltip" data-bs-placement="top" title="Seuils"></i>
+									</a>
+								{% endif %}
+
 								{% if etablissement.documentEtablissements|length > 0 %}
 									<a href="javascript:void(0)" class="card-docs" data-bs-toggle="modal" data-bs-target="#modalDocs{{key}}">
 										<i class="fa-solid fa-folder-open" data-bs-toggle="tooltip" data-bs-placement="top" title="Documents"></i>
