@@ -48,10 +48,8 @@ class EtablissementRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('e')
             ->andWhere(':secteur MEMBER OF e.secteurs')
-            ->andWhere('e.isPublic = :isPublic')
             ->andWhere('e.isActive = :isActive')
             ->setParameter('secteur', $secteur)
-            ->setParameter('isPublic', true)
             ->setParameter('isActive', true)
             ->orderBy('e.name', 'ASC');
 
@@ -65,10 +63,8 @@ class EtablissementRepository extends ServiceEntityRepository
     public function createAllEtablissementQuery($isEtranger = false): Query
     {
         $queryBuilder = $this->createQueryBuilder('e')
-            ->andWhere('e.isPublic = :isPublic')
             ->andWhere('e.isActive = :isActive')
             ->andWhere('e.isEtranger = :isEtranger')
-            ->setParameter('isPublic', true)
             ->setParameter('isActive', true)
             ->setParameter('isEtranger', $isEtranger)
             ->orderBy('e.name', 'ASC');
@@ -83,12 +79,10 @@ class EtablissementRepository extends ServiceEntityRepository
     public function createSearchEtablissementQuery($mots, $isEtranger = false): Query
     {
         $queryBuilder = $this->createQueryBuilder('e')
-            ->andWhere('MATCH_AGAINST(e.name, e.sigle, e.tagsText, e.secteursText, e.villesText) AGAINST (:mots boolean)>0')
-            ->andWhere('e.isPublic = :isPublic')
+            ->andWhere('MATCH_AGAINST(e.name, e.sigle, e.tagsText, e.secteursText, e.villesText, e.diplome) AGAINST (:mots boolean)>0')
             ->andWhere('e.isActive = :isActive')
             ->andWhere('e.isEtranger = :isEtranger')
             ->setParameter('mots', $mots)
-            ->setParameter('isPublic', true)
             ->setParameter('isActive', true)
             ->setParameter('isEtranger', $isEtranger)
             ->orderBy('e.name', 'ASC');

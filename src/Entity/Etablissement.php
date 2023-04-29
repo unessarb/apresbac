@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @HasLifecycleCallbacks 
  * @ORM\Table(name="etablissement", indexes={
  *  @ORM\Index(
- *      columns={"name", "sigle", "tags_text", "secteurs_text", "villes_text"},
+ *      columns={"name", "sigle", "tags_text", "secteurs_text", "villes_text", "diplome"},
  *      flags={"fulltext"}
  * )
  * })

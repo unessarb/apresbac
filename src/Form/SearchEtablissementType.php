@@ -16,7 +16,7 @@ class SearchEtablissementType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'class' => 'search-input',
-                    'placeholder' => 'Rechercher'
+                    'placeholder' => 'Taper ce que tu veux rechercher : école, diplôme...'
                 ]
             ]);
     }

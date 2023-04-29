@@ -3,13 +3,13 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<div class="" style="background: url('{{ asset('uploads/etablissements/' ~ etablissement.logo) }}') center, #fff;width: 50px;
-																				height: 50px;
-																				background-repeat: no-repeat !important;
-																				background-size: contain !important;
-																				background-position: center !important;
-																				border: 2px solid #ddd;
-																				border-radius: 50%;
-																				margin-right:10px"></div>
+																																																		height: 50px;
+																																																		background-repeat: no-repeat !important;
+																																																		background-size: contain !important;
+																																																		background-position: center !important;
+																																																		border: 2px solid #ddd;
+																																																		border-radius: 50%;
+																																																		margin-right:10px"></div>
 				<h5 class="modal-title" id="exampleModalLabel">
 					<strong class="text-uppercase">{{' ' ~ etablissement.sigle}}:
 					</strong>Plus d'informations
@@ -68,6 +68,17 @@
 								</td>
 							</tr>
 						{% endif %}
+
+						<tr>
+							<td>Statut</td>
+							<td>
+								{% if etablissement.isPublic %}
+									Etat
+								{% else %}
+									Privé
+								{% endif %}
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
