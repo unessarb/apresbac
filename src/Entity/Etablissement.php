@@ -10,12 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=EtablissementRepository::class)
  * @HasLifecycleCallbacks 
- * @UniqueEntity("name")
  * @ORM\Table(name="etablissement", indexes={
  *  @ORM\Index(
  *      columns={"name", "sigle", "tags_text", "secteurs_text", "villes_text"},
@@ -37,12 +35,12 @@ class Etablissement
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255)
      * @Gedmo\Slug(fields={"name"}, updatable=false)
      */
     private $slug;
