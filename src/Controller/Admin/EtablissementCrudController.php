@@ -68,7 +68,7 @@ class EtablissementCrudController extends AbstractCrudController
             ->add('secteurs')
             ->add('villes')
             ->add(BooleanFilter::new('isActive', 'Actif'))
-            ->add(BooleanFilter::new('isPublic', 'Public'));
+            ->add(BooleanFilter::new('isPublic', 'Publique'));
     }
 
     public function configureFields(string $pageName): iterable
@@ -84,7 +84,7 @@ class EtablissementCrudController extends AbstractCrudController
             yield DateTimeField::new('updatedAt', 'Modifiée le');
             yield BooleanField::new('isActive', 'Actif')->setDisabled(!$this->isGranted("ROLE_SUPER_ADMIN"));
             yield BooleanField::new('isEtranger', 'Si étranger')->setDisabled(!$this->isGranted("ROLE_ADMIN"));
-            yield BooleanField::new('isPublic', 'Public')->setDisabled(!$this->isGranted("ROLE_ADMIN"));
+            yield BooleanField::new('isPublic', 'Publique')->setDisabled(!$this->isGranted("ROLE_ADMIN"));
         } else {
             $typesBac = ['SM', 'PC', 'SVT', 'SAgro', 'SEco', 'SGC', 'STM', 'STE', 'LSH', 'Chariâa', 'Toutes options'];
             yield FormField::addTab('Détails')->setIcon('info');
@@ -127,7 +127,7 @@ class EtablissementCrudController extends AbstractCrudController
 
             yield BooleanField::new('isActive', 'Actif')->setColumns(12)->setPermission("ROLE_SUPER_ADMIN");
             yield BooleanField::new('isEtranger', 'Si étranger')->setColumns(12)->setPermission("ROLE_ADMIN");
-            yield BooleanField::new('isPublic', 'Public')->setColumns(12)->setPermission("ROLE_ADMIN");
+            yield BooleanField::new('isPublic', 'Publique')->setColumns(12)->setPermission("ROLE_ADMIN");
 
             yield FormField::addTab('Seuils')->setIcon('check-square');
             yield NumberField::new('seuilSM', 'Seuil SM')->setColumns(6)->setNumDecimals(2);

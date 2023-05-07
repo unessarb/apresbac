@@ -71,7 +71,7 @@
 										<i class="fa-solid fa-globe"></i>
 									</a>
 								{% endif %}
-								{% if etablissement.news and etablissement.news.dateLimitInscription %}
+								{% if etablissement.news and etablissement.news.isActive and etablissement.news.dateLimitInscription %}
 									{% set dateLimitInscription = etablissement.news.dateLimitInscription %}
 									{% set isOpenForInscription = date() < dateLimitInscription %}
 									{% if isOpenForInscription %}

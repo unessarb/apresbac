@@ -43,7 +43,7 @@
 						<tr>
 							<td>Durée de la formation</td>
 							<td>
-								{{etablissement.dureeFormation ? etablissement.dureeFormation ~ ' An(s)' : ''}}
+								{{etablissement.dureeFormation ? etablissement.dureeFormation ~ ' ans' : ''}}
 							</td>
 						</tr>
 
@@ -73,7 +73,7 @@
 							<td>Statut</td>
 							<td>
 								{% if etablissement.isPublic %}
-									Etat
+									Publique
 								{% else %}
 									Privé
 								{% endif %}
