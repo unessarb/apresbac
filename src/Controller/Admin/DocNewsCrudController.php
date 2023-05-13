@@ -57,10 +57,7 @@ class DocNewsCrudController extends AbstractCrudController
             yield DateTimeField::new('updatedAt', 'Modifiée le')->setFormat("yyyy-MM-dd 'à' HH:mm:ss");
         } else {
             yield TextField::new('title', 'Titre')->setColumns(6);
-            yield AssociationField::new('news', 'Actualité')->setQueryBuilder(function (QueryBuilder $qb) {
-                $qb->andWhere('entity.isActive = :enabled')
-                    ->setParameter('enabled', true);
-            })->setColumns(6);
+            yield AssociationField::new('news', 'Actualité')->setColumns(6);
             yield TextField::new('link', 'Lien')->setColumns(6);
             yield ImageField::new('file', 'Fichier')
                 ->setBasePath('uploads/news_docs/')

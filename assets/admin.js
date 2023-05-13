@@ -1,3 +1,4 @@
+import './styles/admin.scss';
 const $ = require('jquery');
 
 // create global $ and jQuery variables

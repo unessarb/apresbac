@@ -51,12 +51,7 @@ class DocumentEtablissementCrudController extends AbstractCrudController
             yield DateTimeField::new('updatedAt', 'Modifiée le')->setFormat("yyyy-MM-dd 'à' HH:mm:ss");
         } else {
             yield TextField::new('designation', 'Désignation')->setColumns(6);
-            yield AssociationField::new('etablissement')
-                ->setQueryBuilder(function (QueryBuilder $qb) {
-                    $qb->andWhere('entity.isActive = :enabled')
-                        ->setParameter('enabled', true);
-                })
-                ->setColumns(6);
+            yield AssociationField::new('etablissement')->setColumns(6);
             yield TextField::new('link', 'Lien')->setColumns(6);
             yield ImageField::new('file', 'Fichier')
                 ->setBasePath('uploads/etablissement_docs/')

@@ -3,18 +3,12 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">Les seuils de l'établissement
-					<strong class="text-uppercase">{{etablissement.sigle}}</strong>
+					<strong class="text-uppercase">{{etablissement.sigle}} <span class="text-danger">*</span></strong>
 				</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
 				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th scope="col">Branche</th>
-							<th scope="col">Seuil</th>
-						</tr>
-					</thead>
 					<tbody>
 						{% if etablissement.seuilSM != 0 %}
 							<tr>
@@ -90,6 +84,7 @@
 				</table>
 			</div>
 			<div class="modal-footer">
+				<p class="fw-lighter"><strong><span class="text-danger">*</span> Remarque:</strong> Les seuils d'admission peuvent varier d'une année à l'autre en fonction des notes des étudiants et du nombre de places disponibles. </p>
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
 			</div>
 		</div>

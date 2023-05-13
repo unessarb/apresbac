@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -87,8 +88,7 @@ class NewsCrudController extends AbstractCrudController
                         ->setParameter('enabled', true);
                 })
                 ->setColumns(6);
-            yield DateTimeField::new('dateLimitInscription', 'Date limite inscription')->setColumns('col-md-6 offset-md-6')
-                ->addCssClass('date_limite_inscription d-none')->addWebpackEncoreEntries('admin');
+            yield DateField::new('dateLimitInscription', 'Date limite inscription')->setColumns(6)->addWebpackEncoreEntries('admin');
             yield ImageField::new('image', 'Image')
                 ->setBasePath('uploads/news/')
                 ->setUploadDir('public/uploads/news')

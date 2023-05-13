@@ -125,9 +125,9 @@ class EtablissementCrudController extends AbstractCrudController
                 ->setColumns(6)
                 ->setRequired($pageName !== Crud::PAGE_EDIT);
 
-            yield BooleanField::new('isActive', 'Actif')->setColumns(12)->setPermission("ROLE_SUPER_ADMIN");
-            yield BooleanField::new('isEtranger', 'Si étranger')->setColumns(12)->setPermission("ROLE_ADMIN");
-            yield BooleanField::new('isPublic', 'Publique')->setColumns(12)->setPermission("ROLE_ADMIN");
+            yield BooleanField::new('isActive', 'Actif')->setColumns(2)->setPermission("ROLE_SUPER_ADMIN");
+            yield BooleanField::new('isEtranger', 'Si étranger')->setColumns(2)->setPermission("ROLE_ADMIN");
+            yield BooleanField::new('isPublic', 'Publique')->setColumns(2)->setPermission("ROLE_ADMIN");
 
             yield FormField::addTab('Seuils')->setIcon('check-square');
             yield NumberField::new('seuilSM', 'Seuil SM')->setColumns(6)->setNumDecimals(2);
