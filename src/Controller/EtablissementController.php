@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\DocumentEtablissement;
 use App\Entity\Etablissement;
 use App\Form\SearchEtablissementType;
 use App\Repository\EtablissementRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Asset\Packages;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,5 +81,34 @@ class EtablissementController extends AbstractController
         );
 
         return $this->renderForm('etablissement/index.html.twig', compact('form', 'pagination', 'mots', 'isEtranger'));
+    }
+
+    /**
+     * @Route("/doc_etablissement/{id}", name="app_etablissement_doc", requirements={"id":"\d+"})
+     */
+    public function getDocument(DocumentEtablissement $documentEtablissement, Packages $manager)
+    {
+        // Get the PDF file path.
+        $pdfPath = 'uploads/etablissement_docs/' . $documentEtablissement->getFile();
+        // Create a new modal.
+        $modal = new Response();
+        $modal->setStatusCode(200);
+        $modal->headers->set('Content-Type', $this->getMimeTypeFromPath($pdfPath));
+        $modal->setContent(file_get_contents($pdfPath));
+
+        // Return the modal.
+        return $modal;
+    }
+
+    public function getMimeTypeFromPath(string $path)
+    {
+        // Create a new File object from the path.
+        $file = new File($path);
+
+        // Get the mime type from the file.
+        $mimeType = $file->getMimeType();
+
+        // Return the mime type.
+        return $mimeType;
     }
 }

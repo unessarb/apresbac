@@ -24,7 +24,7 @@
 										<a href="{{doc.link}}" target="_blank">{{doc.link}}</a>
 									{% endif %}
 									{% if doc.file %}
-										<a href="{{ asset('uploads/etablissement_docs/' ~ doc.file)}}" download>Télécharger</a>
+										<a href="{{ path('app_etablissement_doc', { id: doc.id }) }}" target="_blank">Consulter</a>
 									{% endif %}
 								</td>
 							</tr>

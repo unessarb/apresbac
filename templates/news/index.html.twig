@@ -53,7 +53,7 @@
 													<a href="{{doc.link}}" target="_blank">{{doc.title}}</a>
 												{% endif %}
 												{% if doc.file %}
-													<a href="{{ asset('uploads/news_docs/' ~ doc.file)}}" download>{{doc.title}}</a>
+													<a href="{{ path('app_news_doc', { id: doc.id }) }}" target="_blank">{{doc.title}}</a>
 												{% endif %}
 											</li>
 										{% endfor %}
